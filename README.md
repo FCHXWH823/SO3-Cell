@@ -5,7 +5,7 @@ schematic topology, transistor placement, and in-cell routing.
 This repository provides not only the full source code for the SO3 framework, but also a complete
 set of pre-generated library views and related enablement assets required for practical evaluation.
 
-If you use SO3 in any published work, we would greatly appreciate it if you could cite the this paper\[1\].
+If you use SO3 in any published work, we would greatly appreciate it if you could cite this paper [\[1\]](https://vlsicad.ucsd.edu/Publications/Conferences/418/c418.pdf).
 
 We also emphasize that none of the data included here should be interpreted as benchmarking, and
 no value judgments are made regarding the relative merits of commercial EDA tools.
@@ -82,7 +82,7 @@ ARCH=SH ./run_cell.sh INV_X1 NAND2_X1 AOI21_X1
 
 ### Standard Cell Verification and Characterization
 In this part, LVS/PEX and cell characterization are performed for the generated standard cells.
-All scripts used in this stage are derived from PROBE3.0[\[2\]](https://vlsicad.ucsd.edu/Publications/Journals/j143.pdf).
+All scripts used in this stage are derived from PROBE3.0 [\[2\]](https://vlsicad.ucsd.edu/Publications/Journals/j143.pdf).
 
 First, change your current directory to the `Framework/PostCellGen` directory:
 
