@@ -120,6 +120,6 @@ Then, run the following command:
 Please note that running this step requires license for *Synopsys Fusion Compiler*.
 
 # Reference
-\[1\] C.-K. Cheng, A. B. Kahng, B. Kang, S. Kang, J. Lee, and B. Lin, “SO3-Cell: Standard Cell Layout Automation Framework for Simultaneous Optimization of Topology, Placement, and Routing,” in Proceedings of International Conference on Computer-Aided Design (ICCAD) (2025).
+\[1\] C.-K. Cheng, A. B. Kahng, B. Kang, S. Kang, J. Lee, and B. Lin, “SO3-Cell: Standard Cell Layout Automation Framework for Simultaneous Optimization of Topology, Placement, and Routing,” in Proceedings of International Conference on Computer-Aided Design (ICCAD) (2025). [(link)](https://vlsicad.ucsd.edu/Publications/Conferences/418/c418.pdf)
  
 \[2\] S. Choi, J. Jung, A. B. Kahng, M. Kim, C. Park, B. Pramanik, and D. Yoon. “PROBE3. 0: a systematic framework for design-technology pathfinding with improved design enablement.” IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems (TCAD) (2023) [(link)](https://vlsicad.ucsd.edu/Publications/Journals/j143.pdf). 
