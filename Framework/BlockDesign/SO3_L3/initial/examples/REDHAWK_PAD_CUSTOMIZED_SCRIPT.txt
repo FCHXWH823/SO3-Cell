@@ -1,0 +1,83 @@
+##########################################################################################
+# Script: REDHAWK_PAD_CUSTOMIZED_SCRIPT.txt
+# Purpose: This is an example for REDHAWK_PAD_CUSTOMIZED_SCRIPT which is not meant to be used as is. 
+#          Pls customize it to fit your design. 
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+##########################################################################################
+
+create_taps -supply_net VDD -layer 25 -point {0 0} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {150 0} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {300 0} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {450 0} -snap_distance 30
+create_taps -supply_net VDDH -layer 25 -point {600 0} -snap_distance 30
+create_taps -supply_net VDDH -layer 25 -point {750 0} -snap_distance 30
+create_taps -supply_net VDDH -layer 25 -point {900 0} -snap_distance 30
+
+create_taps -supply_net VDD -layer 25 -point {0 150} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {150 150} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {300 150} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {450 150} -snap_distance 30
+create_taps -supply_net VDDH -layer 25 -point {600 150} -snap_distance 30
+create_taps -supply_net VDDH -layer 25 -point {750 150} -snap_distance 30
+create_taps -supply_net VDDH -layer 25 -point {900 150} -snap_distance 30
+
+create_taps -supply_net VDD -layer 25 -point {0 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {150 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {300 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {450 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {600 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {750 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {900 300} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {0 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {150 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {300 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {450 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {600 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {750 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {900 450} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {0 600} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {150 600} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {300 600} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {450 600} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {600 600} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {750 600} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {900 600} -snap_distance 30
+
+create_taps -supply_net VDD -layer 25 -point {450 750} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {600 750} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {750 750} -snap_distance 30
+create_taps -supply_net VDD -layer 25 -point {900 750} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {75 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {225 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {375 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {525 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {675 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {825 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {975 75} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {0 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {150 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {300 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {450 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {600 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {750 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {900 225} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {0 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {150 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {300 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {450 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {600 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {750 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {900 375} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {0 525} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {150 525} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {300 525} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {450 525} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {600 525} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {750 525} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {900 525} -snap_distance 30
+
+create_taps -supply_net VSS -layer 25 -point {450 675} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {600 675} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {750 675} -snap_distance 30
+create_taps -supply_net VSS -layer 25 -point {900 675} -snap_distance 30

@@ -1,0 +1,25 @@
+##########################################################################################
+# Script: TCL_VIA_LADDER_DEFINITION_FILE.txt
+# Purpose: This is an example for TCL_VIA_LADDER_DEFINITION_FILE which is not meant to be used as is.
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+##########################################################################################
+
+remove_via_rules -all
+
+create_via_rule -name via_ladder_name_1 -cut_layer_names {VIA1} -cut_names {Vs} -cut_rows {1} -cuts_per_row {2}
+set viaRule [get_via_rules via_ladder_name_1]
+set_attribute $viaRule upper_metal_min_length_table {0.208}
+set_attribute $viaRule cut_x_min_spacing_table {0.044}
+set_attribute $viaRule cut_y_min_spacing_table {0.060}
+set_attribute $viaRule max_num_stagger_tracks_table {0}
+set_attribute $viaRule for_electro_migration true
+
+create_via_rule -name via_ladder_name_2 -cut_layer_names {VIA1} -cut_names {Vs} -cut_rows {1} -cuts_per_row {3}
+set viaRule [get_via_rules via_ladder_name_2]
+set_attribute $viaRule upper_metal_min_length_table {0.208}
+set_attribute $viaRule cut_x_min_spacing_table {0.044}
+set_attribute $viaRule cut_y_min_spacing_table {0.060}
+set_attribute $viaRule max_num_stagger_tracks_table {0}
+set_attribute $viaRule for_electro_migration true
+

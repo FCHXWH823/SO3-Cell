@@ -1,0 +1,51 @@
+###############################################################################
+# Synopsys(R) Fusion Compiler(TM) Flat Design Planning Reference Methodology
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+###############################################################################
+
+U-2022.12 Updates
+=====================
+* Added support for running legalization during the placement operation of create_power.tcl
+  - If CREATE_POWER_OPERATIONS is specified with "STDCELL_PLACEMENT" (RM default),
+    after create_placement is done, the script now runs a new command rm_legalize_placement, which legalizes the standard cell placement.
+    This allows the running of check_legality, check_pg_connectivity, and check_pg_drc for checking legalization and PG issues.
+
+
+T-2022.03-SP4 Updates
+=====================
+
+General Updates
+===============
+* Added support for netlist input into FC DP flows.
+  - FC flows will now support both RTL and Netlist input formats.
+  - Makefile_dp_flat_netlist2gds was added to support netlist input mode.
+  - Input mode is controlled by the new RM variable "NELIST2GDS_FLOW".
+* Implemented a PREVIOUS_STEP / CURRENT_STEP mechanism in the DP flows.
+  - PREVIOUS_STEP script default are set in the step scripts.
+  - Non-default PREVIOUS_STEP settings have been moved to the appropriate Makefiles.
+  - Utilize RM_VARFILE mechanism in Makefiles to provide PREVIOUS_STEP override.
+  - Resolved values for PREVIOUS_STEP & CURRENT_STEP are eched to the logfiles.
+  - Substituted CURRENT_STEP variable in place of *_BLOCK_NAME throughout DP scripts.
+* Added standardized RM header & footer collateral to each DP script.
+  - run_start & run_end
+  - write_qor_data
+  - report_msg
+* A "view" target was added to each of the Makefiles.
+  - Opens a previously saved block in an interactive session.
+
+Specific script Updates
+=======================
+* init_design_dp.tcl
+  - Code restructuring in support of both RTL and netlist input modes.
+* compile_dp.tcl
+  - Added sourcing of TCL_MODE_SCENARIO_MODEL_ADJUSTMENT_FILE.
+* create_floorplan.tcl
+  - Added check for unplaced ports after port placement.
+* create_power.tcl
+  - Updated stdcell placement in the STDCELL_PLACEMENT operation.
+  - Prior code with "-floorplan" would remove placement blockages inserted by fix_floorplan_rules.
+* place_pins.tcl
+  - Added the option to apply fixed status to placed ports.
+  - Added check for unplaced ports after port placement.
+  - Redirect logfile output when sourcing the port placement file exported by create_floorplan.tcl.

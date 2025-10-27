@@ -1,0 +1,20 @@
+* #########################################################################################
+*  Script: ROUTE_OPT_STARRC_CONFIG_FILE.txt
+*  Purpose: This is an example for ROUTE_OPT_STARRC_CONFIG_FILE and ROUTE_OPT_ECO_OPT_STARRC_CONFIG_FILE which is not meant to be used as is.
+*           Used by StarRC in-design extraction configuration for route_auto.tcl, route_opt.tcl, and route_opt.eco_opt.tcl
+*  Version: R-2020.09-SP3
+*  Copyright (C) 2014-2021 Synopsys, Inc. All rights reserved.
+* #########################################################################################
+
+** The following are required setup
+SIGNOFF_IMAGE: 		your_StarXtract_path (required by StarRC In design extraction but not required by fusion extraction)
+MAPPING_FILE: 		your_starrc_mapping_file 	(please provide ABSOLUTE PATH)
+CORNER_GRD_FILE: 	your_corner_grd_mapping_file 	(please provide ABSOLUTE PATH)
+
+** The following is optional. You can provide an StarRC command file in the config file
+COMMAND_FILE: 		star.cmd 			(please provide ABSOLUTE PATH)
+
+** The following is sample syntax for CORNER_GRD_FILE 
+Corner1 nxtgrd_file1_ABSOLUTE_path
+Corner2 nxtgrd_file2_ABSOLUTE_path
+

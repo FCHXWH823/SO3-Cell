@@ -1,0 +1,41 @@
+###############################################################################
+# Synopsys(R) Fusion Compiler(TM) Hierarchical Design Planning Reference Methodology
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+###############################################################################
+
+U-202.12 Updates
+=====================
+
+General Updates
+===============
+* Removes TCL_USER_TOP_COMPILE_SCRIPT
+
+
+T-2022.03-SP4 Updates
+=====================
+
+General Updates
+===============
+* Added support for netlist input into FC DP flows.
+  - FC flows will now support both RTL and Netlist input formats.
+  - Makefile_dp_hier_netlist2gds was added to support netlist input mode.
+  - Input mode is controlled by the new RM variable "NELIST2GDS_FLOW".
+* Implemented a PREVIOUS_STEP / CURRENT_STEP mechanism in the DP flows.
+  - PREVIOUS_STEP script default are set in the step scripts.
+  - Non-default PREVIOUS_STEP settings have been moved to the appropriate Makefiles.
+  - Utilize RM_VARFILE mechanism in Makefiles to provide PREVIOUS_STEP override.
+  - Resolved values for PREVIOUS_STEP & CURRENT_STEP are eched to the logfiles.
+  - Substituted CURRENT_STEP variable in place of *_BLOCK_NAME throughout DP scripts.
+* Added standardized RM header & footer collateral to each DP script.
+  - run_start & run_end
+  - write_qor_data
+  - report_msg
+
+Specific script Updates
+=======================
+* split_constraints.tcl
+  - Added sourcing of TCL_USER_LIBRARY_SETUP_SCRIPT.
+* place_pins.tcl
+  - Added the option to apply fixed status to top-level and block ports.
+  - Check for unplaced ports after port placement.

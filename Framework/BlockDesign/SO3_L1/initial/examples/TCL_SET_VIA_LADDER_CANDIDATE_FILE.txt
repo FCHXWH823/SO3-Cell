@@ -1,0 +1,13 @@
+##########################################################################################
+# Script: TCL_SET_VIA_LADDER_CANDIDATE_FILE.txt
+# Purpose: This is an example for TCL_SET_VIA_LADDER_CANDIDATE_FILE which is not meant to be used as is. 
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+##########################################################################################
+
+reset_via_ladder_candidates [get_lib_pin lib_1/lib_cell_1/pin_1]
+set_via_ladder_candidate [get_lib_pin lib_1/lib_cell_1/pin_1] -ladder_name via_ladder_name_1
+
+reset_via_ladder_candidates [get_lib_pin lib_2/lib_cell_2/pin_2]
+set_via_ladder_candidate [get_lib_pin lib_2/lib_cell_2/pin_2] -ladder_name via_ladder_name_2
+

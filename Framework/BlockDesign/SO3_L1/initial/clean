@@ -1,0 +1,9 @@
+rm -rf check_*
+rm -rf CLIBs HDL_LIBRARIES/
+rm -rf aes_cipher_top/
+rm -rf rpts_fc logs_fc outputs_fc/ qor*
+rm -rf fc_output.txt 
+rm -rf compare_qor_data/
+rm -rf lm_command.log 
+rm -rf init_design setup 
+rm -rf fc_command.log 

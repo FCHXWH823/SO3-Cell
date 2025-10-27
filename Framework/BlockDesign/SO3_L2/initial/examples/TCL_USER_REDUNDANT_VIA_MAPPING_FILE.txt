@@ -1,0 +1,32 @@
+##########################################################################################
+# Script: TCL_USER_REDUNDANT_VIA_MAPPING_FILE.txt (example)
+# Purpose: This is an example for TCL_USER_REDUNDANT_VIA_MAPPING_FILE which is not meant to be used as is.
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+##########################################################################################
+
+##	add_via_mapping -from {VIA12SQ_C 1x1} -to {VIA12BAR_C 1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA12SQ   1x1} -to {VIA12BAR   1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA12SQ_C 1x1} -to {VIA12SQ_C  1x2} -transform rotate -weight 1
+##	add_via_mapping -from {VIA12SQ   1x1} -to {VIA12SQ    1x2} -transform rotate -weight 1
+##	
+##	add_via_mapping -from {VIA23SQ_C 1x1} -to {VIA23BAR_C 1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA23SQ   1x1} -to {VIA23BAR   1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA23SQ_C 1x1} -to {VIA23SQ_C  1x2} -transform rotate -weight 1
+##	add_via_mapping -from {VIA23SQ   1x1} -to {VIA23SQ    1x2} -transform rotate -weight 1
+##	
+##	add_via_mapping -from {VIA34SQ_C 1x1} -to {VIA34BAR_C 1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA34SQ   1x1} -to {VIA34BAR   1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA34SQ_C 1x1} -to {VIA34SQ_C  1x2} -transform rotate -weight 1
+##	add_via_mapping -from {VIA34SQ   1x1} -to {VIA34SQ    1x2} -transform rotate -weight 1
+##	
+##	add_via_mapping -from {VIA45SQ_C 1x1} -to {VIA45BAR_C 1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA45SQ   1x1} -to {VIA45BAR   1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA45SQ_C 1x1} -to {VIA45SQ_C  1x2} -transform rotate -weight 1
+##	add_via_mapping -from {VIA45SQ   1x1} -to {VIA45SQ    1x2} -transform rotate -weight 1
+##	
+##	add_via_mapping -from {VIA56SQ_C 1x1} -to {VIA56BAR_C 1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA56SQ   1x1} -to {VIA56BAR   1x1} -transform rotate -weight 2
+##	add_via_mapping -from {VIA56SQ_C 1x1} -to {VIA56SQ_C  1x2} -transform rotate -weight 1
+##	add_via_mapping -from {VIA56SQ   1x1} -to {VIA56SQ    1x2} -transform rotate -weight 1
+

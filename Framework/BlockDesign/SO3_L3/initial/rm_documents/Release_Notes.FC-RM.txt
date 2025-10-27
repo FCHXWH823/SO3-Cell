@@ -1,0 +1,1381 @@
+###############################################################################
+# Synopsys(R) Fusion Compiler(TM) Place and Route Reference Methodology
+# Version: U-2022.12-SP4
+# Copyright (C) 2014-2023 Synopsys, Inc. All rights reserved.
+###############################################################################
+
+U-2022.12-SP3 Updates
+=====================
+###############################################################################
+# STARs fixed in the release
+###############################################################################
+* STARs
+  - P10008970-639 - adds save_session -session ${OUTPUTS_DIR}/${DESIGN_NAME} to vc_lp.tcl.
+  - P10008970-925 - in init_design.tcl, the ENABLE_FLOORPLAN_CHECKS conditional is enhanced to cover all conditions.
+  - P10008970-971 - in design_setup.tcl, moved up REPORT_PARALLEL_MAX_CORES to before REPORT_PARALLEL_SUBMIT_COMMAND to avoid command hazard
+  - P10008970-975 - in report_qor.tcl, for report_power, supports a new variable REPORT_POWER_SCALING_RATIO to run "set_power_clock_scaling -ratio $REPORT_POWER_SCALING_RATIO" 
+    if it isspecified. This allows you to specify the frequency ratio (SDC frequency/SAIF frequency) (or clock period ratio (SAIF clock period/SDC clock period)) if they are different.
+  - P10008970-985 - in design_setup.tcl, updated the comments to remove the deprecated use of DP_RM_NDM.
+  - P10008970-990 - adds report_status to fm_r2g.tcl.
+  - P10008970-999 - in design_setup.tcl, the usage descriptions for INIT_DESIGN_INPUT and RTL_SOURCE_FORMAT are updated and improved.
+
+###############################################################################
+# Summary of new variables and other edits
+###############################################################################
+* The "Mark clock network as ideal" section is moved. It was in "Pre-compile customizations" section. 
+  It is now in the logic_opto section prior to the sourcing of TCL_USER_COMPILE_LOGIC_OPTO_PRE_SCRIPT.   
+
+* New variables
+  - REPORT_POWER_SCALING_RATIO - Optional; specify the frequency ratio (SDC frequency/SAIF frequency) for report_power use if they are different
+
+
+U-2022.12-SP3 Updates
+=====================
+* Congestion flow UI update 
+* Summary of new variables and other edits
+* STARs fixed in the release
+
+###############################################################################
+# Congestion flow UI update
+###############################################################################
+* In the previous release, the RM variable ENABLE_HIGH_EFFORT_CONGESTION triggers
+  the set_stage -high_effort_congestion command option in the RM scripts.
+  In this release, the set_stage -high_effort_congestion command option is being deprecated and repalced by the
+  set_qor_strategy -congestion_effort ultra command option.
+
+  As a result, the RM scripts are updated to reflect the new UI changes:
+  	- In fc_setup.tcl/icc2_pnr_setup.tcl:
+		- The ENABLE_HIGH_EFFORT_CONGESTION variable is removed
+		- The SET_QOR_STRATEGY_CONGESTION_EFFORT variable is added to enable the set_qor_strategy -congestion_effort 
+                  command option in the RM scripts.
+	- In the RM scripts, the set_qor_strategy -congestion_effort is being used, replacing the set_stage -high_effort_congestion command option 
+
+###############################################################################
+# Summary of new variables and other edits
+###############################################################################
+* New variables
+  - SET_QOR_STRATEGY_CONGESTION_EFFORT - If set to ultra, enables set_qor_strategy -congestion_effort ultra
+  - REPORT_DISABLE_GUI - When used the application defaults the display to an offscreen image and does not use/or access the X display
+  - TCL_USER_COMPILE_INCREMENTAL_INITIAL_OPTO_PRE_SCRIPT - An optional Tcl file for compile.tcl to be sourced before incremental initial_opto
+  - TCL_USER_REDHAWK_IN_DESIGN_PRE_SCRIPT - An optional Tcl file for redhawk_in_design_pnr.tcl to be sourced before Redhawk indesign flow.
+  - TCL_USER_REDHAWK_IN_DESIGN_POST_SCRIPT - An optional Tcl file for redhawk_in_design_pnr.tcl to be sourced after Redhawk indesign flow. 
+  - TCL_USER_REDHAWK_SC_PRE_SCRIPT - An optional Tcl file for redhawk_in_design_pnr.tcl to be sourced before Redhawk SC flow.
+  - TCL_USER_REDHAWK_SC_POST_SCRIPT - An optional Tcl file for redhawk_in_design_pnr.tcl to be sourced after Redhawk SC flow.
+
+* New rm_user_plugin_scripts
+  - compile_incremental_initial_opto_pre_script.tcl
+  - redhawk_sc_pre_script.tcl
+  - redhawk_sc_post_script.tcl
+  - redhawk_in_design_pre_script.tcl
+  - redhawk_in_design_post_script.tcl	 
+
+* Adds report only version of set_qor_strategy/set_stage/set_tech in addition to existing set_qor_strategy/set_stage/set_tech
+  and output it as a separate report
+
+###############################################################################
+# STARs fixed in the release
+###############################################################################
+* STARs
+  - P10008970-942 - set_starrc_in_design -config needs an absolute path
+  - P10008970-945 - icv_indesign.tcl is missing save_block before and after eval $create_metal_fill_cmd
+  - P10008970-948 - ENABLE_DPS defined, but never being used
+  - P10008970-918 - Extend PVT configuration to the design planning flow scripts
+  - P10008970-926 - please add pre-script for incremental initial_opto in RM scripts
+  - P10008970-915 - report_qor.tcl doesn't report switching activity correctly
+  - P10008970-921 - Requesting pre/post script hooks in In-design Redhawk RM scripts
+  - P10008970-917 - Issue in code that defines the current_scenario in In-design Redhawk scripts
+  - P10008970-956 - Need a way for users to prevent the layout windows popping up during snapshot capture in RM reporting
+  - P10008970-957 - check_legality post initial_map in compile_logic stage of RM
+  - P10008970-955 - write_parasitics no longer in write_data.tcl RM script
+  - P10008970-949 - RM alignment to FPM format generation
+  - P10008970-929 - RM and Qik alignment
+  - P10008970-934 - RM foundry script alignment
+  - P10008970-898 - Please update to make "report_activity -driver" selectable
+
+
+U-2022.12 Updates
+=====================
+* Reorganized design_setup.tcl, fc_setup.tcl, and icc2_pnr_setup.tcl 
+* Makefile Target consolidation
+* Redundant Via flow enhancement
+* New Makefile target rm_summary
+* Use of integrated shielding  
+* Summary of new variables and other edits
+* STARs fixed in the release
+
+###############################################################################
+# Reorganized design_setup.tcl, fc_setup.tcl, and icc2_pnr_setup.tcl
+###############################################################################
+* The design_setup.tcl, fc_setup.tcl, and icc2_pnr_setup.tcl variable files have been re-organized and formatted to work seamlessly with the configureRM GUI utility
+  that is available in the rm_utilities directory.  For additional details about the configureRM GUI see the 2022.03-SP4 section of this document. 
+
+* The variables have been organized under different section headers to help facilitate the population of the variable values in a logical and systematic manner.  
+
+* Templates that were provided with the 2022.03-SP4 version of RM are no longer needed. Format changes have been incorporated into the respective files in the rm_setup directory
+
+###############################################################################
+# Makefile Target consolidation
+###############################################################################
+* All makefiles that utilized a seperate step to create the appropriate variable file have been updated and consolidated into a single makefile target.
+  For example:
+  compile_pre_dft: setup init_design
+        rm -f compile_pre_dft.varfile
+        echo > compile_pre_dft.varfile
+        echo 'set PREVIOUS_STEP $$INIT_DESIGN_BLOCK_NAME' >> compile_pre_dft.varfile
+        echo 'set CURRENT_STEP $${COMPILE_BLOCK_NAME}_logic_opto' >> compile_pre_dft.varfile
+        echo 'set FC_STEP_LIST "pre_initial_map initial_map logic_opto"' >> compile_pre_dft.varfile
+        export RM_VARFILE=compile_pre_dft.varfile; $(FC_EXEC) $(OPTIONS) -f ./rm_fc_scripts/compile.tcl |tee -i $(LOGS_DIR)/compile_pre_dft.log
+
+  The varfile creation now happens with the makefile flow step target.  This consolidation ensures that the varfile is always generated on demand and
+  prevents the varfile from becoming stale.   
+
+###############################################################################
+# Redundant Via flow enhancement
+###############################################################################
+* Added support for customer redundant via insertion flow.  User can supply their own redundant via script using the variable TCL_USER_REDUNDANT_VIA_SCRIPT.
+* User can control if redundant via insertion is run after route_opt.  In previous RM releases, redundant via insertion was always run after route_opt as part of the flow.
+  The variable ENABLE_POST_ROUTE_OPT_REDUNDANT_VIA_INSERTION can be used to control the behavior.    
+
+###############################################################################
+# New Makefile target rm_summary
+###############################################################################
+* rm_summary target will run the rm_summary utility script that generates and refreshes a qor summary table.    
+  To use, submit the rm_summary target in parallel with the appropriate implementation Makefile target 
+  make -j -f rm_setup/Makefile route_opt rm_summary
+  Note: the rm_summary target should only be submitted in parallel with an implementation makefile target.
+  Valid targets: init_design, compile or any substep of compile, clock_opt_cts, clock_opt_opto, route_auto, route_opt, endpoint_opt, timing_eco, icv_in_design, chip_finish 
+
+* Running rm_summary with an implementation target can help the user more easily check the completion status of each setup in the run.  User can view the summary_rm.rpt
+  to see which steps have completed based on the qor summary.  
+
+* The rm_summary target can also be executed standalone.  When made as a single target, the rm_summary utility will run and refresh the summary_rm.rpt based on any reports available 
+  for that particular RM run. 
+
+###############################################################################
+# Use of integrated shielding
+###############################################################################
+* Except for the first create_shields command in the flow, the incremental create_shields commands, which are with the -shielding_mode reshield option, have been replaced by enabling 
+  the route.common.reshield_modified_nets app option (integrated shielding handled by the router during the core commands). This simplifies the usage in the RM scripts.
+* No variable change. The shielding is still enabled by ENABLE_CREATE_SHIELDS and default false.
+* The set_stage command is enhanced. When ENABLE_CREATE_SHIELDS is set to true, it enable route.common.reshield_modified_nets for -step post_cts_opto, 
+  and set_extraction_options -virtual_shield_extraction false for -step post_route.
+* Script changes due to the use of integrated shielding and settings covered by set_stage
+  - The initial create_shields command is moved to the end of clock_opt_cts.tcl which is after clock routing is done. Used to be at start of clock_opt_opto.tcl
+  - In clock_opt_opto.tcl, route_auto.tcl, route_opt.tcl, and endpoint_opt.tcl, the create_shields commands are removed. 
+
+###############################################################################
+# Summary of new variables and other edits
+###############################################################################
+* New variables
+  - ENABLE_POST_ROUTE_OPT_REDUNDANT_VIA_INSERTION - Enables redundant via insertion after hyper_route_opt
+  - TCL_USER_REDUNDANT_VIA_SCRIPT - User provided redundant via insertion script that when defined is sourced in place of the default redundant via insertion flow.
+
+* In compile.tcl the pre compile_fusion report_activity call is now only enabled if set_qor_strategy is set to total_power of if the user has
+  loaded a SAIF file via SAIF_FILE_LIST
+   
+###############################################################################
+# STARs fixed in the release
+###############################################################################
+* STARs
+  - P10008970-850 - Need set_host_options to be set to defined max core value in ICC2-RM flow when using FC instead of ICC2 for running the flow
+  - P10008970-862 - init_design - avoid timing and clock related reports
+  - P10008970-878 - RM endpoint_opt should source TCL_MULTI_VT_CONSTRAINT_FILE
+  - P10008970-857 - Reporting memory and runtime issues with report_parallel 
+  - P10008970-867 - check_clock_transition handled zero clock period improperly
+  - P10008970-882 - Formality Failing for "golden" UPF
+
+
+T-2022.03-SP4 Updates
+=====================
+* Changes to RM TCL variables
+* Updates to compile.tcl
+* report_qor.tcl and rm_report_qor
+* Netlist to GDS flow
+* Makefile "view" target
+* Added two new flows which embed floorplan creation into the PNR flow
+* configureRM
+* Summary of new variables and other edits  
+
+###############################################################################
+# Changes to RM TCL variables
+###############################################################################
+* RTL_READ_FORMAT is renamed to RTL_SOURCE_FORMAT
+
+###############################################################################
+# Updates to compile.tcl
+###############################################################################
+* Default CURRENT_STEP and PREVIOUS_STEP values are defined in the compile.tcl script as COMPILE_BLOCK_NAME and INIT_DESIGN_BLOCK_NAME for the OOTB single compile_fusion flow. For any non-default
+  compile_fusion flow like the 3 step compile flow or the 3rd party dft flow, the CURRENT_STEP and PREVIOUS_STEP variables are initialized in the corresponding Makefile.       
+
+* The following are now included as part of the standard preamble of the compile.tcl script. These items will be evaluated whenever the compile.tcl script is run.  
+  1. Check to enable early_design mode settings	
+  2. check_stage_settings command  
+  3. Check and marking of clock network as ideal
+
+* TCL_MODE_CORNER_SCENARIO_MODEL_ADJUSTMENT_FILE now sourced before holds scenario check is performed
+
+* Additional user plug-ins added TCL_USER_COMPILE_INITIAL_MAP_POST_SCRIPT, TCL_USER_COMPILE_LOGIC_OPTO_PRE_SCRIPT, TCL_USER_COMPILE_LOGIC_OPTO_POST_SCRIPT, TCL_USER_DFT_REPLACEMENT_SCRIPT, and
+  TCL_USER_DFT_POST_SCRIPT 
+
+* The following are now included as part of the standard postlude of the compile.tcl script.  These items will be evaluated whenever the compile.tcl script is run.
+  1. TCL_USER_CONNECT_PG_NET_SCRIPT or connect_pg_net
+  2. change_names -rules verilog -hierarchy -skip_physical_only_cells
+  3. Re-enable power analysis if disabled for set_qor_strategy -metric leakage_power
+  4. write_ascii_files and write saif map
+  5. Create abstract and frame
+
+###############################################################################
+# report_qor.tcl and rm_report_qor
+###############################################################################
+* report_qor.tcl script no longer relies on the block name to determine which reports to execute.  Each stage script will set the REPORT_STAGE variable which determines which reports to generate.  
+  Another variable, REPORT_ACTIVE_SCENARIOS, is used to pass a list of scenarios to activate for reporting in each stage script. For example during compile, REPORT_ACTIVE_SCENARIO is set to REPORT_COMPILE_ACTIVE_SCENARIO_LIST.   
+* A new proc rm_report_qor is now provided as part of the RM through procs_fc.tcl or procs_icc2.tcl.  This proc allows the user to execute the report_qor.tcl script as a procedure. The user can 
+  control the reporting behavior by providing arguments that map to the same variables defined in design_setup.tcl. rm_report_qor also facilitates reporting from a standalone session. Through the proc the RM setup files
+  can be loaded to prepare the environment for reporting.      
+
+###############################################################################
+# Netlist to GDS flow 
+###############################################################################
+* FC-RM now supports gate level netlist input (INIT_DESIGN_INPUT = ASCII) or write_icc2_files output from DC (INIT_DESIGN_INPUT = DC_ASCII)
+* The flow is similar to ICC2-RM flow which runs place_opt.tcl in place of compile.tcl but with fc_shell as the executable
+* How to enable Netlist to GDS flow
+  1. In design_setup.tcl :
+     a. set NETLIST2GDS_FLOW to true
+     b. set INIT_DESIGN_INPUT to either ASCII, or DC_ASCII
+        - For ASCII, specify VERILOG_NETLIST_FILES with your gate level netlist input
+        - For DC_ASCII, provide ${DCRM_RESULTS_DIR}/${DCRM_FINAL_DESIGN_ICC2}/${DESIGN_NAME}.icc2_script.tcl as your design input
+  2. Run Makefile_netlist2gds
+     Notice that the flow runs place_opt.tcl instead of compile.tcl
+
+###############################################################################
+# Makefile "view" target
+###############################################################################
+* Added a new Makefile target "view" for opening an RM saved block or a user saved block in an interactive session
+* Required input : VIEW_BLOCK_NAME, which is a variable in the makefile
+  View a saved block in an interactive session
+  1. Specify VIEW_BLOCK_NAME with a block name, either in the <design name>/<label> format, such as "RISC_CORE/init_design", or without using a label, such as "test1"
+     Note that RM's saved block format is always $DESIGN_NAME/<stage name>. So if the DESIGN_NAME is RISC_CORE and the stage is init_design, and you want to open the final saved block from this task,
+     you should specify RISC_CORE/init_design as the VIEW_BLOCK_NAME 
+  2. It's recommended to specify the value of VIEW_BLOCK_NAME when running make so there's no edit needed in the makefile. Here is the usage example: 
+	make -f rm_setup/Makefile view VIEW_BLOCK_NAME=RISC_CORE/init_design
+     where view is the makefile target, RISC_CORE/init_design is the name of the saved block which you want to open, 
+     and VIEW_BLOCK_NAME=RISC_CORE/init_design is the syntax to specify a value for VIEW_BLOCK_NAME when running make
+* The view target runs a new script view.tcl which opens the design library as specified by the RM variable DESIGN_LIBRARY in the design_setup.tcl, 
+  and the block name as specified by VIEW_BLOCK_NAME. It also sources RM utility, RM setup files typically found at the beginning of an RM script,
+  and sources TCL_USER_NON_PERSISTENT_SCRIPT as specified in design_setup.tcl.
+
+###############################################################################
+* Added two new flows which embed floorplan creation into the PNR flow
+###############################################################################
+* Makefile_pnr_discrete_fp_steps
+  - Runs autofloorplanning through "logic_opto", implements floorplanning via separate steps, then picks up compile from "insert_dft" amd runs through rest of PNR steps.
+    This option allows for optimal floorplan interaction and debug.
+
+* Makefile_pnr_single_fp_steps
+  - Runs autofloorplanning through "logic_opto", implements floorplanning in a single step, then picks up compile from "insert_dft", and runs thorugh rest of PNR steps.
+    This option implements floorplanning in a single tool invocation and is better suited for replay once the floorplan parameters have been established.
+
+###############################################################################
+# configureRM 
+###############################################################################
+* configureRM is a new utility that is provided in the rm_utilities directory to help the user configure their design_setup.tcl and fc_setup.tcl/icc2_pnr_setup.tcl.
+* The utility provides a GUI interface that the user can use to populate the different variables in the setup files. 
+* The variables have been organized and categorized to guide the user from initial design setup, flow step configuration, and advanced flow customization.
+* How to use configureRM:	
+  1. cd rm_utilities/
+  2. From the unix prompt type "configureRM".  This will bring up the GUI.  The GUI is populated with variables from design_setup.tcl and fc_setup.tcl/icc2_pnr_setup.tcl.
+     In rm_utilities/ there are local copies of design_setup.tcl and fc_setup.tcl or icc2_pnr_setup.tcl.  
+     These copies serve as templates that categorize and order the varibles in the GUI.
+  3. Fill in the fields for each of the variables with the desired values.
+  4. When the GUI is populated, to commit the edits and write out updated files select the "save" button.  By default the utility will write out /design_setup.tcl.<processId> and 
+     ./fc_setup.tcl.<processId> -or- ./icc2_pnr_setup.tcl.<processId> to rm_utilities/.  The new files will be written out in the same format as the templates.
+
+###############################################################################
+# Summary of new variables and miscellaneous edits
+###############################################################################
+* New variables
+  - NETLIST2GDS_FLOW - Specify true if your design input is gate level netlist (INIT_DESIGN_INPUT = ASCII) or write_icc2_files output from DC (INIT_DESIGN_INPUT = DC_ASCII)
+    VERILOG_NETLIST_FILES - for gate level netlist input (if INIT_DESIGN_INPUT = ASCII)
+    DCRM_RESULTS_DIR and DCRM_FINAL_DESIGN_ICC2 - for write_icc2_files output from DC (if INIT_DESIGN_INPUT = DC_ASCII)
+  - ENABLE_FLOORPLAN_CHECKS - Enables floorplan checks performed by rm_check_design during init_design stage
+  - TCL_USER_DFT_REPLACEMENT_SCRIPT - User provided DFT insertion script.  When provided, the out of the box insert DFT flow is bipassed
+  - ICV_IN_DESIGN_ENABLE_ALL_LAYER_CHECK - Use to disable all layer checks to limit false errors from missing layout.
+  - ENABLE_INLINE_REPORT_QOR - enables inline intermediate report_qor calls during the implementation flow
+  - REPORT_FUNCTIONAL_ECO_ACTIVE_SCENARIO_LIST - A subset of scenarios to be made active when generating reports for the functional_eco step
+  - CHIP_FINISH_FROM_BLOCK_NAME and ENDPOINT_OPT_FROM_BLOCK_NAME - Allows you to choose a different starting block other than the default $ROUTE_OPT_BLOCK_NAME
+
+- New FC RM user plugin scripts
+  - TCL_USER_COMPILE_INITIAL_MAP_POST_SCRIPT
+  - TCL_USER_COMPILE_LOGIC_OPTO_PRE_SCRIPT
+  - TCL_USER_COMPILE_LOGIC_OPTO_POST_SCRIPT
+  - TCL_USER_DFT_POST_SCRIPT
+  - TCL_USER_PLACE_OPT_INCREMENTAL_PLACEMENT_POST_SCRIPT
+
+* Implemented a PREVIOUS_STEP / CURRENT_STEP mechanism
+  - These two variables are defined in each stage script with default values as part of the default FC-RM/ICC2-RM flow.
+    They are used to determine the current and previous stage for each stage script locally.    
+  - Non-default PREVIOUS_STEP settings are set by the appropriate Makefile, depending on the flow that is being run by the Makefile.
+  - Utilize RM_VARFILE mechanism in Makefiles to provide PREVIOUS_STEP override.
+    When CURRENT_STEP and PREVIOUS_STEP are updated, the new values are passed from the Makefile to the stage script through the <stage>.varfile, where <stage> is the stage name/Makefile target.
+    The <stage>.varfile is then sourced by the stage script after where CURRENT_STEP and PREVIOUS_STEP are defined in the stage script to override the default values per the flow requires.
+  - Resolved values for PREVIOUS_STEP & CURRENT_STEP are echoed to the logfiles.
+
+* Standard script start up and shutdown
+  - All stage scripts now check and source the RM_VARFILE as part of the script start up.
+  - All stage scripts include "report_msg -summary" as part of the script shutdown.
+
+
+T-2022.03-SP3 Updates
+=====================
+* Release notes and readme are moved to the new rm_documents directory
+* Support for fusion reference library
+* RM Log Parser
+* Library Setup File
+* report_qor.tcl Updates
+* FM script alignment with FM-RM
+
+###############################################################################
+# Release notes and readme are moved to the new rm_documents directory
+###############################################################################
+- A new directory called rm_documents is added to the RM release
+- All release notes and readme files are moved under rm_documents
+
+###############################################################################
+# Support for fusion reference library
+###############################################################################
+- In the previous release, RM supports CLIB as reference library for the design library creation. You would specify a list of CLIB reference libraries using the RM variable REFERENCE_LIBRARY,
+  init_design.tcl during design library creation, will add them as reference library.
+
+- In this release, support for fusion reference library has been added. Same way as you specify CLIB as the refernce library using the RM variable REFERENCE_LIBRARY,
+  With this enhancement, you will be able to provide either just CLIB, just fusion library, or both as reference library using the RM variable REFERENCE_LIBRARY.
+  There's no impact on existing CLIB reference library users
+
+- If you don't have fusion library yet but have the necessary FRAMs and DBs, RM supports fusion library creation as an optional step using FRAMs and DBs.
+  You can run this step before init_design to create fusion referebce library first. Below are the steps:
+  1. In design_setup.tcl, specify FRAMs and DBs using the new variable FUSION_REFERENCE_LIBRARY_FRAM_LIST and FUSION_REFERENCE_LIBRARY_DB_LIST, respectively
+  2. Run makefile with target create_fusion_reference_library to create fusion reference library
+     - In the makefiles, a new optional target create_fusion_reference_library is added for fusion library creation
+     - The step sources the new script create_fusion_reference_library.tcl to run lc_sh to create fusion reference libraries using FRAMs and DBs.
+     - Once the step is completed. Fusion library is created under the directory specified by $FUSION_REFERENCE_LIBRARY_DIR
+  3. Now run makefile with init_design target. init_design.tcl during design library creation, will check for the existence of $FUSION_REFERENCE_LIBRARY_DIR, and if it is found,
+     the fusion reference libraries within the directory will be added to as referencc library
+
+- The user interface for CLIB on-the-fly creation (library configuration flow) has been updated
+  In this release, if you don't have CLIB but have necessary FRAMs and DBs, you can specify FRAMs and DBs using dedicated variables CLIB_REFERENCE_LIBRARY_CONFIGURATION_FLOW_FRAME_LIST and
+  CLIB_REFERENCE_LIBRARY_CONFIGURATION_FLOW_DB_LIST, and init_design.tc during design library creation will call library manager to create CLIB using the specified FRAMs ann DBS and add them as reference library.
+  Please note that using fusion reference library disqualifies the use of on-the-fly CLIB creation.
+  If you have fusion library specified, do noo specify CLIB_REFERENCE_LIBRARY_CONFIGURATION_FLOW_FRAME_LIST or CLIB_REFERENCE_LIBRARY_CONFIGURATION_FLOW_DB_LIST
+
+###############################################################################
+# RM Log Parser
+###############################################################################
+- rm_logparse is a log parser available in 2022.03-SP3 RM designed to help capture and report a summary of tool and RM-error and RM-warnings in the current session
+
+- At the end of each RM stage script, log parser will be called to parse the log file of the current stage and output a summary of RM log file messages.  
+	Goal is to bring the user’s attention to errors and warnings early in the flow (init_design/compile)
+	Parser will output a summary table of error messages found in the log
+	Parser will provide the line number of the error message and indicate if the error occurred while sourcing a plug-in script
+	Context can help facilitate the debug process narrowing down where and why an error was issued
+
+- The ouput of the log parser will be captured at the end of the logfile that is being parsed so that the user can locate the information more easily by scrolling directly to the end of the log.
+
+###############################################################################
+# Library Setup File 
+###############################################################################
+- In SP3 RM will have a dedicated hook to load a library setup file. 
+	New plugin TCL_USER_LIBRARY_SETUP_SCRIPT can be defined in design_setup.tcl                  
+
+- The library setup script can be used to setup information related to technology, reference library, stream files, and link libraries for example. 
+
+###############################################################################
+# report_qor.tcl Updates
+###############################################################################
+- route_auto Non-SI reporting will now be an optional.  It controlled by the variable REPORT_DEBUG found in design_setup.tcl.  Default is off.
+
+- Clock power reporting to be variable controlled. Set REPORT_CLOCK_POWER in design_setup.tcl to "true" to enable report_clock_qor -type power during reporting
+  Clock power will only be reported after CTS and route_opt stages.  Default will be off.
+
+- Reorder reporting commands in report_qor.tcl so that critical reports are executed first, i.e., timing reports
+
+- Update all timing related commands to report only for active scenarios
+
+- New variables in design_setup.tcl to allow user to specify which scenarios should be active and used for reporting
+	REPORT_COMPILE_ACTIVE_SCENARIO_LIST
+	REPORT_PLACE_OPT_ACTIVE_SCENARIO_LIST      
+	REPORT_CLOCK_OPT_CTS_ACTIVE_SCENARIO_LIST  
+	REPORT_CLOCK_OPT_OPTO_ACTIVE_SCENARIO_LIST 
+	REPORT_ROUTE_AUTO_ACTIVE_SCENARIO_LIST     
+	REPORT_ROUTE_OPT_ACTIVE_SCENARIO_LIST      
+	REPORT_CHIP_FINISH_ACTIVE_SCENARIO_LIST    
+	REPORT_ICV_IN_DESIGN_ACTIVE_SCENARIO_LIST  
+	REPORT_ENDPOINT_OPT_ACTIVE_SCENARIO_LIST   
+	REPORT_TIMING_ECO_ACTIVE_SCENARIO_LIST     
+
+###############################################################################
+# FM script alignment with FM-RM
+###############################################################################
+- In this RM release, the formality run script provided with the FC and ICC2 RMs will now be the same FM run script provided with the FM RM.
+
+- The FM script fm_r2g.tcl is more complete and offers additional tool configuration options that are not supported with the script provided in past RM releases.
+
+-Running FM through the FC RM makefile now has the same interface as running the FM RM makefile 
+	Usage model consistency will make FM RM adoption/transition smoother
+	Utilizes the same support files: fm_setup.tcl, header_fm.tcl are now part of rm_setup directory
+
+- With the script alignment formal verification will work off the native NDM and doesn’t require any netlisting out.
+
+
+T-2022.03 Updates
+=====================
+* Enhanced compile_fusion usage model support 
+* Improved out of the box Multi Vth Constraint Support
+* A new user plugin to override variables defined in sidefile_setup.tcl 
+* Infer switching activity for non-SAIF flows
+* InDesign PrimePower support
+* Automatic route_detail -incremental after hyper_route_opt
+
+###############################################################################
+# Enhanced compile_fusion usage model support   
+###############################################################################
+- FC RM now supports 4 different use modes: Monolihic, DFT Centric, Third-Party DFT, and Handoff  
+  There is a new variable called FC_STEP_LIST that is used to configure the execution of each compile_fusion flow using the compile.tcl script
+
+- FC_STEP_LIST is a task variable that configures the list of steps executed by compile_fusion 
+               pre_initial_map - executes pre initial_map design setup steps 
+	       initial_map - compile_fusion is executed from initial_map to initial_map 
+               logic_opto - compile_fusion is executed from logic_opto to logic_opto 
+               insert_dft - Assumes logic opto complete, only insert_dft is executed 
+               initial_place - compile_fusion is executed from initial_place to initial_place 
+               initial_drc - compile_fusion is executed from initial_drc to initial_drc 
+               initial_opto - compile_fusion is executed from initial_opto to initial_opto 
+               initial_opto_incremental - compile_fusion  executes  initial_opto in incremental mode 
+               final_place - compile_fusion is executed from final_place to final_place 
+               final_opto - compile_fusion is executed from final_opto to final_opto 
+
+- There are three Makefiles provided as part of the FC-RM:
+	- Makefile will run the monolothic or DFT centric flow  
+-	- Makefile_third_party_dft will run the third party dft flow
+	- Makefile_handoff can be used to faclitate the handoff of a design from synthesis to place and route.   
+
+- A variable file is created and used in each Makefile. It defines the appropriate FC_STEP_LIST for each makefile target.
+  User is not exected to define or modify the FC_STEP_LIST variable.  The variables are automatically configured in each of the Makefiles 
+
+- The monolithic compile_fusion flow is the traditional default FC-RM out of the box flow. Compile_fusion is run from initial_map through final_opto in a single tool session
+- The DFT centric flow runs compile_fusion in three tool sessions. First compile_fusion is run fom initial map to logic opto, then inset_dft, 
+  and lastly initial_place to final_opto.   
+
+- The third party DFT flow runs compile_fusion through initial_opto. DFT insetion within FC is disabled.  Data is written out after initial_opto.
+  After 3rd party DFT, init_design rebuilds the database (default is ASCII), and flow continues from incremental initial_opto to final_opto.  
+
+- The handoff flow runs compile_fusion through initial_opto. Data is written out after initial_opto and can be handed off via ASCII or NDM.  This data can then be used to continue 
+  from final_place to final_opto.
+   
+###############################################################################
+# Improved out of the box Multi Vth Constraint Support
+###############################################################################
+- A new procedure called auto_multi_vth_constraint is now used as part of the multi_vth_constraint_script.tcl provided with RM.
+  The procedue is defined in rm_utilities/procs_fc.tcl or procs_icc2.tcl.
+
+- If the user provides an LVT percentage, the command will apply the user constraint to the design 
+
+- If the user does not provide a constraint and no constraint has already been applied, auto_multi_vth_constraint command will automatically assign a multi vth constraint on the design 
+  based on the number of VT groups defined.
+  Percentage of LVT to constrain is 30 if >=3 VT groups. 90 if only 2 VT groups 
+
+##############################################################################c
+# A new user plugin to override variables defined in sidefile_setup.tcl
+###############################################################################
+-  There is a new file in the rm_user_plugin_scripts directory called sidefile_setup_override.tcl.  It is intended to allow users to locally override node specific variables defined in sidefile_setup.tcl  
+   At the beginnng of each stage script this file will be sourced after the sidefile_setup.tcl using the -after_file switch with rm_source.  Variable definitions in the override file will take precedence. 
+   User can define any node specific variables to override the value defined in sidefile_setup.tcl.  This also prevents users from having to modify and maintain local copies of the rm_tech_scripts  
+   directory.
+
+###############################################################################
+# Infer switching activity for non-SAIF flows
+###############################################################################
+-  When the set_qor_strategy target metric is total_power, RM will now check whether there are any simulated activities in the design.
+   This will be done by checking if the "Simulated" row total from "report_activity -driver" is 0%.
+   If no simulated activity is detected, the infer_switching_activity command will be run to infer the switching activity on the drivers of the Special Control Input pins (SCIs) in the design. 
+   By infering switching activity, the dynamic power calculated for the design will reflect a more realistic value compared to the dynamic power calculated with missing switching activity information.  
+
+###############################################################################
+# InDesign PrimePower support
+###############################################################################
+-  InDesign PrimePower flow is now supported in RM. Using FSDBs, PrimePower will create an updated gate level SAIF that will be annotated back into the design after various steps in the implementation flow.
+   In fc_setup.tcl, there are three new variables added to enabled and configure the flow.
+
+-  The TCL_PRIMEPOWER_CONFIG_FILE variable is required in order to enable InDesign PrimePower flow.
+   The config file contains the command set_indesign_primepower_options which will be used to define which FSDBs should be used to refresh the SAIF acivtity in the design.
+   In the examples directory there is a file called TCL_PRIMEPOWER_CONFIG_FILE.indesign_options.tcl that provides some guidance on what information needs to be provided with
+   the set_indesign_primepower_options command. 
+
+-  The INDESIGN_PRIMEPOWER_STAGES defines the list of stage names where the user wants to run the Indesign PrimePower flow  
+   Valid list values include AFTER_LOGIC_OPTO AFTER_INITIAL_OPTO AFTER_FINAL_OPTO AFTER_PLACE_OPT AFTER_CLOCK_OPT_OPTO AFTER_ROUTE_OPT
+
+-  KEEP_INDESIGN_SAIF_FILE variable controls whether the saif file generated during Indesign PrimePower flow is kept. By default saif file will be overwritten
+
+###############################################################################
+# Automatic route_detail -incremental after (hyper_)route_opt
+###############################################################################
+- Adds a new step to automatically run "route_detail -incremental true -initial_drc_from_input true" after the core command in route_opt.tcl (core command : hyper_route_opt) and in endpoint_opt.tcl 
+  (core command : targeted_ep_ropt_pba_ccd) to help work on routing DRC.
+  By default, the command automatically triggers when the following conditions are met :  
+  (1) DRC increases after the core command (2) DRC increase percentage is larger than a specified threshold (defaull is 10%) (3) DRC before core command is less than a specified threshold (default is 10000) 
+  (4) DRC after the core command is at least larger than a specified threshold (default is 50)
+
+- New Tcl variables are added to design_setup.tcl to allow user configuration of the feature or turning the feature off
+  - INCR_ROUTE_DETAIL_MODE is the main switch and default is "auto" to trigger this feature based on the said conditions. 
+    Set it to false to always disable and true to unconditionally enable it.
+  - INCR_ROUTE_DETAIL_MAX_ITERATIONS is default null. This is an optional variable to control the -max_number_iterations of the route_detail command with an iteration number differnt than tool default. 
+
+  The following variables are only takes effect when INCR_ROUTE_DETAIL_MODE is auto :
+  - INCR_ROUTE_DETAIL_DRC_INCREASE_THRESHOLD_MIN is default "0.1" (i.e. 10%). If DRC increase (i.e. DRC after core command - DRC before core command) divided by DRC before core command is smaller than 
+    this value, the feature won't trigger. A larger value requires the DRC increase to be much larger in order to trigger route_detail.
+  - INCR_ROUTE_DETAIL_DRC_THRESHOLD_MAX is default 10000. The feature won't trigger if routing DRC before the core command is larger than this value. This avoids the feature to work on unrouteable designs.
+  - INCR_ROUTE_DETAIL_DRC_THRESHOLD_MIN is default 50. The feature won't trigger if routing DRC after the core command is smaller than this value. This avoids the feature to work on designs with small DRCs.
+
+
+S-2021.06-SP4 Updates
+=====================
+* Third Party DFT flow support
+* Multi Vth Constraint File Support
+* A new user plugin to support adjustment of modes/corners/scenarios/models
+* Auto Disable Automatic Scenario Reduction through set_stage
+* High Effort Congestion flow support 
+* hyper_route_opt support of IRD-CCD
+* Verbose reporting mode
+* Revamped summary reporting script 
+* FuSa Support
+
+###############################################################################
+# Third Party DFT flow support
+###############################################################################
+- The Fusion Compiler RM classic flow has been updated to support Third Party DFT flows.
+- The 3rd Party DFT flow is run via a separate makefile provided in rm_setup/ called Makefile_third_party_dft  
+	- UNIFIED_FLOW needs to be set to false
+- No impact to OOTB FC RM behavior. UNIFIED_FLOW default remains true.   
+- The flow runs init_design then compile_fusion through initial_opto.  Data is written out after initial_opto.  
+  After 3rd party DFT, init_design rebuilds the database (default is ASCII), and flow continues from incremental initial_opto to the end of the compile flow.
+- The flow uses a new file, incremental_design_setup.tcl, to help configure the input needed to rebuild the database after third party DFT is complete 
+ 	-incremental_design_setup.tcl can be found in the rm_setup/
+ 
+###############################################################################
+# Multi Vth Constraint File Support
+###############################################################################
+- A dedicated plugin for Multi-Vth definition is now supported in the RM scripts
+- The Multi Vt template file, multi_vth_constraint_script.tcl, is provided in the
+  rm_user_plugin_scripts/ directory.
+- User can easily define their voltage groups using the template file
+- Sets a default low_vt percentage multi-vth constraint (10 percent). 
+- RM stage scripts enhanced to source the Multi Vt constraint file 
+
+###############################################################################
+# A new user plugin to support adjustment of modes/corners/scenarios/models
+###############################################################################
+- A new optional file that can be used to apply adjustment of modes/corners/scenarios/models
+- The file can be defined using the TCL_MODE_CORNER_SCENARIO_MODEL_ADJUSTMENT_FILE variable in design_setup.tcl 
+- This file will be sourced in every step after scenario management is completed
+
+###############################################################################
+# Auto Disable Automatic Scenario Reduction through set_stage
+###############################################################################
+- set_stage enhanced to disable Automatic Scenario Reduction if 3 or less active setup scenarios are detected.
+- Message will be issued when criteria is met, and Automatic Scenario Reduction  is disabled
+- Check will be performed for all set_stage calls (synthesis to post_route)
+
+###############################################################################
+#  High Effort Congestion flow support 
+###############################################################################
+- New High Effort Congestion flow is now available via set_stage
+- In design_setup.tcl set the ENABLE_HIGH_EFFORT_CONGESTION variable to true, default is false
+- When enabled, the -high_effort_congestion switch is used with set_stage -step {synthesis|compile_place|placement} 
+
+###############################################################################
+# hyper_route_opt support of IRD-CCD
+###############################################################################
+- In 2021.06-SP3 if you are enabling IRD-CCD (ENABLE_IRDCCD is set to true), route_opt.tcl runs the classic 3 route_opt flow instead of hyper_route_opt
+- In 2021.06-SP4, hyper_route_opt supports IRD-CCD. When ENABLE_IRDCCD is set to true, the classic 3 route_opt flow has been removed, and hyper_route_opt will be used.
+  
+###############################################################################
+# Verbose reporting mode
+###############################################################################
+- In design_setup.tcl there is a new variable REPORT_VERBOSE that can be enabled to generate more detailed timing reports. 
+- By default REPORT_VERBOSE is set to false
+- When set to true, report_qor.tcl runs additional report_timing with -max_paths equal to 300 and -slack_lesser_than 0
+
+###############################################################################
+# Revamped summary reporting script 
+###############################################################################
+- There is a new summary reporting script (rm_summary.py) provided in rm_utilities/
+- This new script is executed in summary.tcl and replaces the older print_results.tcl summary script    
+- print_results.tcl will still be provided in 2021.06-SP4 RM, but will be retired in the next major RM release. 
+  
+##############################################################################e
+# FuSa Support
+###############################################################################
+- Native FuSa support in RM
+- Variables required for FuSa flow can be found in design_setup.tcl
+	- Set the variable ENABLE_FUSA variable to true to enable FuSa flow, default is false 
+- Detailed configuration of FuSa flow can be done using fusa_setup.tcl which is located in rm_fc_scripts/
+- The following scripts have been updated to support FuSa 
+	- init_design.tcl, compile.tcl, route_opt.tcl, and report_qor.tcl 
+
+S-2021.06-SP3 Updates
+=====================
+* init_design.tcl simplification
+* Option to reset incoming application options during init_design
+* Optional DFT centric compile_fusion flow
+* Enhancements for handshake with DP-RM
+* Enhancements to support technology independent scripts
+* hyper_route_opt replaces 3 route_opt by default
+* set_qor_strategy -mode for tiered recipe support 
+* set_early_data_check_policy enhancement
+* check_stage_settings command enhancement
+* A new user plugin to support set_pvt_configuration
+* Other enhancements
+
+###############################################################################
+# init_design.tcl simplification
+###############################################################################
+- init_design.tcl is re-organized to improve usability and readability
+- Integrates contents of secondary scripts init_design.from_ascii/from_dc_ascii/from_dp_ndm/from_rtl.tcl/read_rtl.tcl 
+  (last two files are for FC-RM) back to init_design.tcl so these design creation tasks can be done at same level
+- Floorplanning tasks are now performed in flat DP RM. P&R's init_design is focused on reading design data, 
+  floorplan file, constraints and checks to make sure your design is ready for P&R.
+- If you have a floorplan ready, you can just start init_design and run into P&R very quickly and simple. 
+  Making it easier for you to start P&R.
+- Decoupled floorplanning components from PNR's init_design.tcl. Improves handshake from flat DP RM to PNR's init_design.tcl.
+- Adds basic floorplan checks such as site row, tracks, signal terminals, PG, macro placement etc after design and floorplan is read in. 
+  Flags failure if issue is found and stops Makefile flow at init_design step.
+- Groups relevant physical and timing constrains loading for EoU and readability
+  Now covers design constraints loading such as clock NDR,  SAIF, lib cell purpose which used to be in place_opt/compile.tcl scripts
+- Moved the comments about group_path, set_clock_gating_check, and set_power_derate to examples/init_design.additional_setup.tcl
+
+###############################################################################
+# Option to reset incoming application options during init_design
+###############################################################################
+- In the init_design.tcl script the option to reset important app_options to the tool defaults for an incoming design has been added.
+- Prevents unintentional app option settings from being introduced into the RM flow
+- Ensures app options are set only through megaswitch commands or user plugin files
+- To reset app options in the init_design stage, set the variable RESET_CHECK_STAGE_SETTINGS to "all".  
+ 
+###############################################################################
+# Optional DFT centric compile_fusion flow
+###############################################################################
+- compile_fusion.tcl is separated into three separate scripts: compile_pre_dft.tcl, compile_dft.tcl, and compile_post_dft.tcl.
+- Optional targets supported in the FC RM Makefile
+- The separation of the compile.tcl script is centered around DFT insertion and will be more conducive for DFT configuration development.
+- Single compile.tcl script from initial_map to final_opto remains the default flow in the Makefile.
+
+###############################################################################
+# Enhancements for handshake with flat DP-RM
+###############################################################################
+- Floorplanning tasks are now covered in flat DP-RM instead and with addtional capabilities and flexibilities (see training)
+- init_design.tcl simply reads floorplan from user or flat DP-RM output.
+- Improves handshake between flat DP-RM & P&R's init_design.tcl
+  If flat DP-RM is used, a helper file header_from_dprm.tcl is generated by DP RM and will be sourced by init_design.tcl automatically. 
+  It sets RM Tcl variables such as TCL_FLOORPLAN_FILE, DESIGN_LIBRARY, and INIT_DESIGN_INPUT_BLOCK_NAME corresponding to INIT_DESIGN_INPUT mode so user specification is not needed.
+
+###############################################################################
+# Enhancements to support technology independent main scripts
+###############################################################################
+- Previously each advanced node version of RM are customized with technology contents, with hardcoded references to the technology dependent sidefile names in the main scripts.
+  In the setup file, the relevant variables are also set to technology dependent values or files.
+- To improve EoU and allow you to use just one global scripts for multiple technology collaterals,
+  scripts are enhanced to support technology agnostic main scripts
+- Removes hardcoded references to sidefiles, set_technology mega switch, and technology specific settings from main scripts
+  The reference to sidefiles and set_technology mega switch are all variablized.
+- These sidefile pointers (variables) and variables with technology specific values are now defined in a new and separate script called sidefile_setup.tcl.
+- For advanced nodes, this preconfigured sidefile_setup.tcl will be part of the technology bundle (ie, sidefile tar ball supplied by your Synopsys support).
+  Once the technology bundle is downloaded and installed, this sidefile_setup.tcl will be sourced by RM scripts and points to the sidefiles in rm_tech_scripts from the bundle.
+  By default, RM ships with a blank sidefile_setup.tcl under rm_setup just for reference. The actual preconfigured sidefile_setup.tcl will be part of the technology bundle
+- set_technology command is now in the main scripts. The new RM Tcl variable TECHNOLOGY_NODE, which if specified, triggers the command. 
+  The variable is defined as part of the sidefile_setup.tcl
+
+###############################################################################
+# hyper_route_opt is added as the default command for route_opt.tcl 
+###############################################################################
+- hyper_route_opt becomes the default command in route_opt.tcl
+- A Synopsys proc snps_hyper_route_opt_post_eco is added in route_opt.tcl before hyper_route_opt command.
+  The contents of the proc will be taken and performed by hyper_route_opt command.
+  redundant via insertion is supported and can be enabled during hyper_route_opt after phase2 and before phase3 through the proc.
+  A new variable TCL_USER_HYPER_ROUTE_OPT_POST_ECO_SCRIPT allows you to insert customizations needed before phase3 through the proc.
+- If you are enabling IRD-CCD (ENABLE_IRDCCD is set to true), route_opt.tcl runs the classic 3 route_opt flow instead of hyper_route_opt  
+	- This is the same flow as in the previous release where ENABLE_IRDCCD is enabled before second route_opt and ENABLE_REDUNDANT_VIA_INSERTION
+  	  is enabled after 2nd route_opt	 
+- In the previous release, there's an optional eco_opt command controlled by ENABLE_ECO_OPT for replacing 3rd route_opt. It has been removed.
+	- The following variables are no longer used and are removed from fc_setup.tcl :
+		ENABLE_ECO_OPT, ROUTE_OPT_ECO_OPT_PT_PATH, ROUTE_OPT_ECO_OPT_STARRC_CONFIG_FILE
+		ROUTE_OPT_ECO_OPT_DB_PATH ROUTE_OPT_ECO_OPT_TYPE ROUTE_OPT_ECO_OPT_WITH_PBA ROUTE_OPT_ECO_OPT_WORK_DIR ROUTE_OPT_ECO_OPT_PRE_LINK_SCRIPT ROUTE_OPT_ECO_OPT_POST_LINK_SCRIPT
+	- route_opt.eco_opt.tcl is removed
+
+###############################################################################
+# set_qor_strategy -mode supports tiered recipes
+###############################################################################
+- Available modes are balanced (default), early_design, and extreme_power
+- A new variable SET_QOR_STRATEGY_MODE is added to rm_setup/fc_setup.tcl to allow the control. Default is set to balanced.
+- Scripts are updated to enable this. 
+
+###############################################################################
+# check_stage_settings command enhancement
+###############################################################################
+- check_stage_settings command can now report all non-default app options settings for a given block
+- App options set through the mega-switches (based on the metric, stage, and step arguments specified) will be filtered from the report
+- Within each RM script (for ex, clock_opt_cts.tcl) the check_stage_settings command is executed just before the primary stage command is run.  
+  To enable reporting of all non-default app options set NON_DEFAULT_CHECK_STAGE_SETTINGS to true
+
+###############################################################################
+# A new user plugin to support set_pvt_configuration
+###############################################################################
+- In all main scripts, added support for TCL_PVT_CONFIGURATION_FILE. This user plugin is intended for your set_pvt_configuration commands.
+- It is source at the beginning of each main script before open_lib.
+
+###############################################################################
+# Other enhancements
+###############################################################################
+- In header_fc.tcl, ./examples is added to the search_path
+- In design_setup.tcl :
+	- SET_HOST_OPTIONS_MAX_CORE is renamed to SET_HOST_OPTIONS_MAX_CORES
+	- Moved RM variables ADVANCED_NODE_LIBRARY_TYPE and SYNOPSYS_LOGIC_LIBRARY_MODE (for applicable nodes) from fc_setup.tcl to design_setup.tcl
+	- Since floorplanning tasks are now performed in flat DP-RM, including PG creation and sourcing of PG script,
+          RM Tcl variable TCL_PG_CREATION_FILE is removed and replaced by TCL_COMPILE_PG_FILE. 
+          TCL_COMPILE_PG_FILE is used by DP-RN. It's defined in fc_dp_setup.tcl and used in create_power.tcl. (Referred to DP-RM for details)
+- In set_lib_cell_purpose.tcl, the variables are now relocated to design_setup.tcl
+- In compile.tcl :
+	- When the compile.flow.autoungroup app option is set to false, the app option opt.common.consider_port_direction will be set to true 
+	- The TCL_DFT_PRE_IN_COMPILE_SETUP_FILE has been moved and is now sourced just before "compile_fusion -to logic_opto"
+	- The TCL_USER_DFT_PRE_SETUP_SCRIPT plugin script has been added just before the DFT_SETUP_FILE is sourced   
+	- The TCL_USER_COMPILE_PRE_INITIAL_PLACE_SCRIPT has been moved and is now sourced just before "compile_fusion -from initial_place -to initial_drc"
+	- mark_clock_tree -routing_rules is now executed before "compile_fusion -from initial_place -to initial_drc"
+- For reporting
+	- Previously all the reports are named with the prefix $REPORT_PREFIX
+          In this release, a sub-directory is created for each step's reporting and as a result, the prefix is no longer used
+	  For example, the report for report_app_options would be $REPORTS_DIR/$REPORT_PREFIX/report_app_options.end
+          Previously it is $REPORTS_DIR/$REPORT_PREFIX.report_app_options.end
+	- In report_qor.tcl, the report_drc_error command is used for DRC summary report	 
+- write_data.tcl
+	- Updated sequence of sourcing so that write_verilog_lvs_cmd, write_gds_cmd, write_oasis_cmd are executed after $SIDEFILE_WRITE_DATA is sourced
+	- For each applicable node which comes with multiple technology sidefiles, the sidefiles have been combined into one single sidefile for somplification.
+- For advanced nodes versions, for applicable nodes
+	- Removed all useage of*set_technology sidefiles. The set_technology command is now directly performed in init_design.tcl
+	- Consolidation of PG sidefiles 
+	- Consolidation of floorplanning sidefiles
+
+S-2021.06 Updates
+=================
+* Renamed TCL_USER_MAPPED_CONSTRAINTS_SCRIPT variable to TCL_USER_COMPILE_PRE_INITIAL_PLACE_SCRIPT
+* Updated set_ideal_network remove register pins from collection
+* Reporting of NDRs and clock settings moved after sourcing TCL_LIB_CELL_PURPOSE_FILE 
+* New recommended power analysis settings
+* Removed nested source from init_design.from_dp_rm_ndm.tcl
+* Added incremental mark_clock_trees -routing_rules 
+* Write scandef version updated to 5.8
+* Added new commands check_clock_transition and restore_clock_transition
+* Added application fix to registers in clock_opt_cts script
+* Enhanced report_qor.tcl script with additional reporting commands
+* Added new optional user plugin variables to design_setup.tcl
+* Enhancements in directories, setup files, and file sourcing
+* Updated redundant via insertion (RVI) flow to improve QoR
+* Enhanced timing_eco.tcl to improve EoU
+* Enhanced redhawk_in_design.tcl and redhawk_in_design.tcl to improve EoU
+* Added an endpoint_opt step for final design closure
+* Enhancements related to read_def and read_saif
+* Added HPC support
+
+###############################################################################
+# Renamed TCL_USER_MAPPED_CONSTRAINTS_SCRIPT variable to TCL_USER_COMPILE_PRE_INITIAL_PLACE_SCRIPT
+###############################################################################
+* TCL_USER_MAPPED_CONSTRAINTS_SCRIPT variable has been remamed to TCL_USER_COMPILE_PRE_INITIAL_PLACE_SCRIPT.  This name is more intuitive
+  and more clearly describes where in the compile flow the user plugin script will be used.  
+
+###############################################################################
+# Updated set_ideal_network remove register pins from collection
+###############################################################################
+* Registers clock pins have been removed from the collection for the set_ideal_network command in order to prevent some optimization 
+  steps from deriving a size_only constraint on the register thereby restricting the optimization step.   
+
+###############################################################################
+# Reporting of NDRs and clock settings moved after sourcing TCL_LIB_CELL_PURPOSE_FILE
+###############################################################################
+* In order to properly report cts lib cell purpose settings, reporting of NDRs and clock settings moved after sourcing of TCL_LIB_CELL_PURPOSE_FILE
+
+###############################################################################
+# New recommended power analysis settings
+###############################################################################
+* set_app_options -name hdlin.naming.upf_compatible -value true
+  Enabled when reading an RTL SAIF in order to help improve the annotation rate
+
+* saif_map -type ptpx -essential -write_map ${OUTPUTS_DIR}/${COMPILE_BLOCK_NAME}.saif.ptpx.map
+  -essential option is recommended when writing mapping file for power analysis tools i.e. PrimePower 
+ 
+###############################################################################
+# Removed nested source from init_design.from_dp_rm_ndm.tcl
+###############################################################################
+* The init_design.import_from_dp.tcl script is no longer sourced inside the init_design.from_dp_rm_ndm.tcl.
+  The content of the init_design.import_from_dp.tcl can now be found directly in the init_design.from_dp_rm_ndm.tcl script.
+
+###############################################################################
+# Added incremental mark_clock_trees -routing_rules
+###############################################################################
+* In compile.tcl incremental mark_clock_trees -routing_rules has been added after compile_fusion -to logic opto.
+  Ensures that routing rules are properly updated for new clock nets 
+
+###############################################################################
+# Write scandef version updated to 5.8
+###############################################################################
+* In compile.tcl the scandef is now written out with version 5.8.  This aligns with the default write_def version.
+
+###############################################################################
+# Added new commands check_clock_transition and restore_clock_transition
+###############################################################################
+* The check_clock_transition command detects and applies a clock max transition constraint on the fastest clock(s) per active scenario to improve OOTB CTS QoR
+  The max transition constraint is based on a percentage of the period of the fastest clock.  That percentage is specified with the -threshod option.  
+  A default threshold of 15% will be used with check_clock_transition in clock_opt_cts.tcl    
+
+* If the incoming clock max transition constraint is greater than the threshold max transition, the command will issue an informative message. 
+  When -apply_max_transition is specified, the derived max transition constraint will be applied to the clock if the constraint is tighter 
+  than the incoming clock max transition constraint.
+  If incoming clock max transition constraint is tighter than the threshold, clock max transition is maintained.  
+
+* If the clock transition was updated by the check_clock_transition command, it will only be applied for clock_opt build_clock.  The command restore_clock_transition will 
+  restore the clock max transition back to the incoming clock max_transition constraint after the clocks have been synthesized.
+
+###############################################################################
+# Added application fix to registers in clock_opt_cts script
+###############################################################################
+* In clock_opt_cts.tcl the registers are marked as application_fixed before clock_opt build_clock.   
+  This ensures that the registers will not be intentionally displaced during clock_opt_cts or clock_opt_opto.
+
+###############################################################################
+# Enhanced report_qor.tcl script with additional reporting commands
+###############################################################################
+* A number of new reporting commands have been added to the report_qor.tcl script to provide users with additional detailed reports.
+
+  report_activity -rtl, report_activity -driver, report_activity -verbose, report_clock_power -nosplit -type per_segment
+  report_clock_timing -type summary -clock_synthesis_view -scenarios [all_scenarios] -nosplit
+  report_clock_timing -type skew -clock_synthesis_view -scenarios [all_scenarios] -nosplit
+  report_clock_timing -type latency -clock_synthesis_view -scenarios [all_scenarios] -nosplit 
+  report_corners [all_corners], report_dont_touch -all, report_extraction_options -corners [all_corners]
+  report_ignored_layers, report_reference -hier -nosplit, report_size_only -all
+  (Per active scenario) report_timing -delay_type max -path_type full_clock_expanded  -max_paths 300 -trans - cap -fanout -net -input_pins -derate -crosstalk -physical -attributes 
+  (Per active scenario) report_timing -delay_type min -path_type full_clock_expanded  -max_paths 300 -trans - cap -fanout -net -input_pins -derate -crosstalk -physical -attributes
+  (Per active scenario) report_timing -path end -nosplit -max_paths 5000
+  report_tracks -nosplit, report_user_units -nosplit, report_power_scopes -nosplit, report_pst -nosplit, report_supply_set -nosplit, proc_qor report
+  report_ideal_network, check_legality, check_variants -dont_use -included_purposes
+  report_power suports user provided REPORT_POWER_SAIF_FILE and REPORT_POWER_SAIF_MAP. report_power only executes if power scenarios are detected
+  report_drc is a new proc which generates DRC summary in a tabular format
+
+* When POCV is enabled report_timing will generate reports with and without -variation
+
+* Added check_variants -dont_use -included_purposes
+  This command will check if variant cells that belong to the same group have consistent dont_use attribute and will return a list of problematic variant cells.  
+  It can also report the lib cell purpose information for the variant cells.
+
+* The app option route.global.timing_driven is set to true before report_congestion for pre-route stages. 
+
+###############################################################################
+# Added new optional user plugin variables to design_setup.tcl
+###############################################################################
+* TCL_USER_INIT_DESIGN_PRE_SCRIPT can be specified and will be sourced at the start of init_design.tcl
+* TCL_USER_CREATE_DFT_PORTS_POST_SCRIPT can be specified and will be sourced in init_design.from_rtl.tcl after DFT_PORTS_FILE is sourced
+* TCL_USER_ROUTE_OPT_2_POST_SCRIPT can be specified and will be sourced after second route_opt
+
+###############################################################################
+# Enhancments in directories, setup files, and file sourcing
+###############################################################################
+* Reorganized the contents in the setup files under rm_setup/
+  - For all the non-variable contents such as set_host_options, mkdir, search_path, etc, they are now moved to a new script header_*.tcl (for example, header_icc2_pnr.tcl)
+  - All the setup files and procedure scripts are now directly sourced in each main script.
+    design_setup.tcl is no longer sourced inside fc_setup.tcl.
+       
+* A new proc rm_source is created for file sourcing to improve ease of use.
+  rm_soruce will check if the variable is specified, if the file exists, and prints out information at beginning and end of sourcing.
+  All scripts have been updated to use rm_source.  
+
+* Added a new directory rm_utilities/ which contains Tcl procedure files used by the RM scripts 
+
+* Added a new directory rm_user_plugin_scripts/ with placeholder plugin scripts
+
+  There is a new directory called rm_user_plugin_scripts which contains placeholder (empty) pre/post plugin scripts. 
+  In the design_setup.tcl, the pre/post plugin variables are populated with a path to the corresponding placeholder script in the rm_user_plugin_scripts directory.
+  Use of the placeholder scripts is not required. The path to the plugin scripts can be updated as needed. rm_user_plugin_scripts is added to search_path
+
+* Added rm_tech_scripts to search_path. 
+
+  When you download the separate sidefile tar balls for advanced node RM versions, in th download, 
+  the sidefiles will be contained in the rm_tech_scripts directory. You can then copy and combine it with your existing RM main scripts.
+  Since rm_tech_scripts is part of the search_path, all the sidefiles will be sourced using the search_path.
+  rm_tech_scripts dir is expected to be at the same level as where the rm_setup, rm_*_scripts are located at.
+
+* Added a new variable LOGS_DIR to design_setup.tcl which controls the value of LOGS_DIR in the makefile
+
+###############################################################################
+# Updated redundant via insertion (RVI) flow to improve QoR
+###############################################################################
+* RVI flow is updated. There are now 3 places where RVI will be performed when ENABLE_REDUNDANT_VIA_INSERTION is set to true in design_setup.tcl
+  - At the end of clock_opt_cts.tcl : soucing of TCL_USER_REDUNDANT_VIA_MAPPING_FILE, report_redundant_vias, and add_redundant_vias 
+  - At the end of route_auto.tcl : add_redundant_vias
+  - In the route_opt.tcl after second route_opt : add_redundant_vias -timing_preserve_setup_slack_threshold 0
+
+###############################################################################
+# Enhanced timing_eco.tcl to improve EoU
+###############################################################################
+* Supports ICV_IN_DESIGN_METAL_FILL_SELECT_LAYERS in metal refill.
+* Automatically performs full metal refill when ECO percent change is higher than ICV_IN_DESIGN_METAL_FILL_ECO_THRESHOLD.
+
+###############################################################################
+# Enhanced redhawk_in_design.tcl and redhawk_in_design.tcl to improve EoU
+###############################################################################
+* Added a new block label REDHAWK_IN_DESIGN_BLOCK_NAME for redhawk_in_design.tcl and rhsc_in_design_pnr.tcl so each will save block using its own block label,
+  instead overwriting the input block label
+* Set default value of REDHAWK_ANALYSIS to static 
+* Enhanced script to locate redhawk binary from search path if REDHAWK_DIR or REDHAWK_SC_DIR is not specified by the user
+
+###############################################################################
+# Added an endpoint_opt step for final design closure
+###############################################################################
+* Added support for route_opt targeted endpoint PBA CCD optimization
+* Added a new step endpoint_opt to Makefiles and a new script endpoint_opt.tcl to rm_icc2_pnr_scripts
+* Added a new command targeted_ep_ropt_pba_ccd in endpoint_opt.tcl 
+* Added new variables to facilitate the endpoint_opt step required operations and to allow customizations
+  - ENDPOINT_OPT_BLOCK_NAME, ENDPOINT_OPT_ACTIVE_SCENARIO_LIST : specifies block label for the step and scenarios to be activated
+  - TCL_USER_ENDPOINT_OPT_PRE_SCRIPT, TCL_USER_ENDPOINT_OPT_SCRIPT, TCL_USER_ENDPOINT_OPT_POST_SCRIPT : specifies user provided plugin files
+  - ENDPOINT_OPT_MAX_PATHS, ENDPOINT_OPT_SLACK_THRESHOLD, ENDPOINT_OPT_TARGET_SCENARIOS, ENDPOINT_OPT_LOOP, ENDPOINT_OPT_PATH_GROUP_FILTER
+    Controls the behavior of targeted_ep_ropt_pba_ccd regarding max violated paths to collect, slack threshold to gather the violated paths,
+    target scenarios to collect the violated paths, number of iterations, and path group filter if you want to excldue certain path groups
+
+###############################################################################
+# Enhancements related to read_def and read_saif
+###############################################################################
+* Added a new variable DEF_READ_OPTIONS to allow user specified read_def options. Default is "-add_def_only_objects all"
+* Renamd SAIF_FILE to SAIF_FILE_LIST to support the usage or reading single SAIF, a list of SAIF files, or a list consisting of SAIF file and optionally the 
+  corresponding weight, scaling ratio, strip path, and the path for each SAIF, as read_saif command natively supports. 
+  For example : set SAIF_FILE_LIST "{1.saif -scaling_ratio 5 -weight 2} {2.saif -scaling_ratio 5} {3.saif -path xyz}"
+
+###############################################################################
+# Added HPC support
+###############################################################################
+* A new variable HPC_CORE is added to fc_setup.tcl to enable support for arm core designs
+  - If a correct core name is specified, the corresponding set_hpc_options command will be enabled accordingly in 
+    compile.tcl, clock_opt_cts.tcl, clock_opt_opto.tcl, route_auto.tcl, and route_opt.tcl along with necessary plugins.
+
+
+R-2020.09-SP6 Updates
+=====================
+* FC RM will only support the in-compile DFT synthesis flow
+
+###############################################################################
+# FC RM will only support the in-compile DFT synthesis flow
+###############################################################################
+* Starting from R-2020.09-SP6 release, Fusion Compiler FE will only support the "in-compile" DFT synthesis flow.
+  As a result, previous RM configuration settings to enable "pre-compile" DFT flow will no longer be available.
+  The DFT_FLOW variable found in th design_setup.tcl, compile.tcl, and report_qor.tcl script is no longer used to select the DFT flow.
+  If your script is configured to utilize the "in-compile" DFT flow, there is no additional action needed and the script should work without modification.
+  Please refer to Fusion Compiler release notes on any action you may need to take, if your script is configured to utilize the "pre-compile" DFT flow.
+
+R-2020.09-SP3 Updates
+=====================
+* New reporting command check_stage_settings
+* Ideal clock network applied for pre-CTS stages
+* Added support for new step compile_place in set_stage
+* A new hook TCL_USER_COMPILE_PRE_INITIAL_OPTO_SCRIPT before initial_opto 
+* Redhawk and Redhawk-SC
+* Removes check_routes from clock_opt_opto.tcl
+* "set_starrc_in_design -config $ROUTE_OPT_STARRC_CONFIG_FILE" at the end of route_auto.tcl before reporting
+* ECO fusion
+* write_qor_data
+* A new examples/ directory
+
+###############################################################################
+# New reporting command check_stage_settings
+###############################################################################
+* A new command check_stage_settings is available in the RM scripts.  The check_stage_settings command will 
+  be run just before the the major stage command is executed.  The command compares current app option settings 
+  against set_technology, set_qor_strategy, set_stage, and select tool default settings which can impact runtime or ppa.
+  check_stage_settings will output only app options that have current settings that are different from the recommended setting.
+  The command also has the ability to reapply set_technology, set_qor_strategy, and set_stage if a difference is detected.  This
+  can be enabled with the variable RESET_CHECK_STAGE_SETTINGS.  The variable is defined in fc_setup.tcl.
+
+###############################################################################
+# Ideal clock network applied for pre-CTS stages
+###############################################################################
+* In pre-cts scripts (compile.tcl and place_opt.tcl), the clocks are marked as ideal with the commands set_ideal_network and 
+  remove_propagated_clock.  Marking the clocks as ideal will prevent unrealistic clock switching power from dominating pre-cts power estimation.  
+
+###############################################################################
+# Added support for new step compile_place in set_stage
+###############################################################################
+* set_stage supports a new step called compile_place.  In this new step set_stage, will set the appropriate tie cell max_fanout 
+  based on the number of scan chains detected.  If no scan chains are found, the place.coarse.continue_on_missing_scandef application 
+  option will be enabled.
+
+###############################################################################
+# A new hook TCL_USER_COMPILE_PRE_INITIAL_OPTO_SCRIPT before initial_opto
+###############################################################################
+* Added a new hook TCL_USER_COMPILE_PRE_INITIAL_OPTO_SCRIPT to design_setup.tcl.
+  It allows user customizations after initial_drc and before initial_opto
+* Previously compile.tcl runs compile_fusion from initial_place to initial_opto in one step. 
+  It now stops after initial_drc to allow sourceing of the new hook, and then continue with initial_opto.
+
+###############################################################################
+# Redhawk and Redhawk-SC
+###############################################################################
+* Supports RHSC
+  - Added an optional rhsc_in_design_pnr step to Makefiles, which runs a new sccript rhsc_in_design_pnr.tcl for RHSC
+  - In design_setup.tcl
+    - REDHAWK_IN_DESIGN_PNR_FROM_BLOCK_NAME specifies the starting block for RHSC
+    - REDHAWK_SC_GRID_FARM (new variable) specifies submit commands for the distribution jobs
+    - REDHAWK_SC_DIR (new variable) specifies Redhawk-SC path
+    - RHSC_PYTHON_SCRIPT_FILE (new variable) specifies your customized python script. 
+    - Specify RHSC_GENERATE_COLLATERAL (new variable) for running analyze_rail -script_only -generate_file for RHSC_PYTHON_SCRIPT_FILE
+* Supports customized PGA settings for RHSC
+  - REDHAWK_PGA_CUSTOMIZED_SCRIPT in design_setup.tcl specifies a customized PGA settings.
+  - Added ./examples/REDHAWK_PGA_CUSTOMIZED_SCRIPT.txt as an example
+* Supports a plugin script to call create_taps commands with different options for both RH and RHSC
+  - REDHAWK_PAD_CUSTOMIZED_SCRIPT (new variable) specifies such a script
+  - Aded ./examples/REDHAWK_PAD_CUSTOMIZED_SCRIPT.txt as an example
+* Updated redhawk_in_design_pnr.tcl script.
+  Removed redhawk_in_design_irap.tcl, redhawk_in_design_full.tcl, and redhawk_in_design_analysis_only.tcl which are no longer needed.
+* Updates IR driven placement (IRDP) usage and scripts
+  - ENABLE_IRAP is renamed to ENABLE_IRDP, which enables the feature. Default is false.
+    - When ENABLE_IRDP is set to true, set_stage -step post_cts_opto command in clock_opt_opto.tcl will check for
+      a valid TCL_IRDP_CONFIG_FILE, and enable the feature if all conditions are met.  
+  - Added examples (new) for 4 different use cases :
+	examples/TCL_IRDP_CONFIG_FILE.manual.rh.tcl	 	- manual run with Redhawk
+	examples/TCL_IRDP_CONFIG_FILE.manual.rhsc.tcl	 	- manual run with Redhawk-SC
+	examples/TCL_IRDP_CONFIG_FILE.streamlined.rh.tcl	- streamlined run with Redhawk
+	examples/TCL_IRDP_CONFIG_FILE.streamlined.rhsc.tcl	- streamlined run with Redhawk-SC
+* Supports IR driven route_opt CCD (IRDCCD) feature
+  - The feature is enabled at second route_opt.
+  - ENABLE_IRDCCD (new variable) enables the feature. Default is false.
+    - sources TCL_IRDCCD_CONFIG_FILE
+    - Added examples for TCL_IRDCCD_CONFIG_FILE (new)
+	examples/TCL_IRDCCD_CONFIG_FILE.rh.tcl			- Redhawk
+	examples/TCL_IRDCCD_CONFIG_FILE.rhsc.tcl		- Redhawk-SC
+
+###############################################################################
+# Removed check_routes from clock_opt_opto.tcl
+###############################################################################
+* Removed the command from clock_opt_opto.tcl. Not recommended after clock_opt final_opto.
+
+###############################################################################
+# set_starrc_in_design -config $ROUTE_OPT_STARRC_CONFIG_FILE
+###############################################################################
+* The command is already available before route_opt commands in route_opt.tcl.
+* In this release, it is added at the end of route_auto.tcl after design is routed and before reporting, 
+  so that same configuration can be used for reporting at the end of route_auto. 
+
+###############################################################################
+# ECO fusion updates
+###############################################################################
+* ROUTE_OPT_ECO_OPT_EXTRACTION_MODE is no longer used and is removed
+* Comments for eco_opt are updated to give clear message about the prerequisites for running the feature
+  - ECO Fusion doesn't support Fusion Extraction nor In-design StarRC.
+    If the app option extract.starrc_mode is set to fusion_adv or in_design, ECO fusion runs with standalone StarRC extraction which requires
+    a valid ROUTE_OPT_ECO_OPT_STARRC_CONFIG_FILE.
+  - route_opt.tcl will check for ROUTE_OPT_ECO_OPT_STARRC_CONFIG_FILE if the app option extract.starrc_mode is set to fusion_adv or in_design
+
+###############################################################################
+# write_qor_data
+###############################################################################
+* In the previous release, report_qor.tcl runs light weight write_qor_data with 
+  -report_list "host_machine report_app_options report_utilization report_design wirelength" if REPORT_PARALLEL_SUBMIT_COMMAND is not specified,
+  while it runs write_qor_data -report_group depending on the stage if REPORT_PARALLEL_SUBMIT_COMMAND is specified.
+* In this release, report_qor.tcl always runs write_qor_data -report_group depending on the stage, regardless of REPORT_PARALLEL_SUBMIT_COMMAND.
+
+###############################################################################
+# A new examples/ directory
+###############################################################################
+* In the previous release, all the example scripts are located in the same scripts directory as the other scripts (rm_*_scripts/)
+* In this release, a dedicated directory examples/ is created to contain all the example scripts.
+  - If the example script is associated with a variable, the example file is named with the variable as prefix.
+    - For ex, the example file for the ECO fusion config file variable ROUTE_OPT_STARRC_CONFIG_FILE is examples/ROUTE_OPT_STARRC_CONFIG_FILE.txt
+  - When a script or a variable in the setup file is referring to an example file, the example file can be found in examples/ directory
+
+
+R-2020.09 Updates
+=====================
+* Added new special feature for multibit banking
+* Added new special feature data check manager
+* Added new design_setup.tcl TCL_USER_NON_PERSISTENT_SCRIPT variable
+* Removed new special feature variable ENABLE_ROUTE_OPT_PBA
+* GRE related updates
+* New parallel reporting utility
+* New QoRsum utility  
+* New technology support for 22nm Global Foundry Synopsys Logic Library version
+* Scenario power analysis configuration for set_qor_strategy metrics
+* Formality support updates
+* Updates to set_qor_strategy support
+
+###############################################################################
+# Added new special feature for multibit banking
+###############################################################################
+
+* In the fc_setup.tcl the ENABLE_MULTIBIT variable is added as a special feature.
+  This allows the user to independently turn on multibit banking separately from the 
+  metric target total_power in set_qor_strategy. The default is false, but you can change
+  the value to true to have set_stage -step synthesis enable the multibit banking 
+  app_options.
+
+###############################################################################
+# Added new special feature data check manager
+###############################################################################
+
+* A new special feature for early data checking is available in the RM scripts. At the 
+  start of each primary script the RM enables the early data check policy as 
+  defined by the EARLY_DATA_CHECK_POLICY variable in fc_setup.tcl. You can set 
+  EARLY_DATA_CHECK_POLICY to either lenient or strict to apply the early data check 
+  policy. By default the policy is none. 
+
+  if {$EARLY_DATA_CHECK_POLICY != "none"} {
+        ## Design check manager
+        set_early_data_check_policy -policy $EARLY_DATA_CHECK_POLICY -if_not_exist
+  }
+
+###############################################################################
+# Added new design_setup.tcl TCL_USER_NON_PERSISTENT_SCRIPT variable
+###############################################################################
+
+* After loading the block, each script now has a space to source a file defined by
+  the RM tcl variable TCL_USER_NON_PERSISTENT_SCRIPT. This is a new plugin file space
+  to source a file to define any non-persistent settings for a design such as the 
+  setup for set_threshold_voltage_groups. The variable is defined in design_setup.tcl.
+
+###############################################################################
+# Removed new special feature variable ENABLE_ROUTE_OPT_PBA
+###############################################################################
+
+* The ENABLE_ROUTE_OPT_PBA variable is removed from the fc_setup.tcl file. The 
+  postroute optimization with PBA is automatically enabled in the RM scripts when 
+  set_qor_strategy is metric target is leakage_power or total_power. 
+
+###############################################################################
+# GRE related updates
+###############################################################################
+
+* The clock_opt final_opto GRE is now on-by-default in Fusion Compiler. This is
+  related to the following updates in the RM:
+
+  - The ENABLE_GRE variable is removed from fc_setup.tcl as the feature is now 
+    on-by-default.
+  - For GRE it is recommend to use the same list of scenarios for the clock_opt_opto,
+    route_auto, and route_opt steps. 
+  - The ROUTE_FOCUSED_SCENARIO RM tcl variable is added to the fc_setup.tcl. This 
+    specifies a dominant scenario for timing driven routing. By default it is an
+    empty string and allows the tool to pick the dominant scenario based on timing.
+  - For this new feature it is recommended to run the create_shields command before
+    clock_opt final_opto, so the command in the RM is moved to the start of the 
+    clock_opt_opto.tcl script. It can be enabled by the special feature RM tcl
+    variable ENABLE_CREATE_SHIELDS. This also controls reshielding after detail
+    routing and after route_opt. 
+
+###############################################################################
+# New parallel reporting utility 
+###############################################################################
+
+* The reporting in the RM now supports parallel reporting to speed up runtime of 
+  your design by submitting a new job for running the report_qor.tcl script with the
+  report_parallel command. Two new RM tcl variables are defined in fc_setup.tcl.
+
+  - The REPORT_PARALLEL_SUBMIT_COMMAND variable can be specified with a string to 
+  submit a job to the user's compute farm. The report_parallel command uses the
+  variable's definition to submit a new session to open the saved database and do
+  the report_qor.tcl script.
+  - The REPORT_PARALLEL_MAX_CORES variable configures the number of cores used for 
+  parallel reporting when submitting a job.
+
+###############################################################################
+# New QoRsum utility  
+###############################################################################
+
+* The RM now supports the use of two new commands for reporting, write_qor_data and
+  compare_qor_data. These two commands are run in the report_qor.tcl script and
+  automatically generate the reports to be then be compared and visualized in an
+  HTML format. Two new variables are defined in the design_setup.tcl file to specify
+  the output locaton for the QoRsum utility.
+
+  - WRITE_QOR_DATA_DIR defines the directory location for the output files of
+  the write_qor_data command for each step. By default this is defined as "./qor_data"
+  and directory for each RM step.
+  - The COMPARE_QOR_DATA_DIR variable defines the directory location for the file
+  output of the compare_qor_data command. By default this is defined as 
+  "./compare_qor_data" and the index.html can be viewed in a browser to see the 
+  QoRsum data visualization of your run data.
+
+###############################################################################
+# New technology support for 22nm Global Foundry Synopsys Logic Library version
+###############################################################################
+
+* The RM now supports the technology configuration for 22nm Global Foundry  
+  Synopsys Logic Library version in R-2020.09. The Synopsys Logic Library (SG) 
+  version is the only one supported in this release, the non-SG version is not
+  available at this time. This configuration has side files under NDA protection 
+  for foundry specific settings. To get the side files contact your Synopsys
+  support team. 
+
+###############################################################################
+# Scenario power analysis configuration for set_qor_strategy metrics 
+###############################################################################
+
+* When setting the SET_QOR_STRATEGY_METRIC variable to timing or leakage_power in
+  fc_setup.tcl the clock_opt_cts.tcl, clock_opt_opto.tcl, and route_opt.tcl scripts
+  manages the power analysis of active scenarios to direct optimization towards
+  the specified metric. 
+  
+  - When set to timing, no power optimization is directed to the tool in preroute. 
+  If there is an active scenario with the leakage_power and dynamic_power analysis
+  set to true, the RM scripts set the analysis to false during the clock_opt 
+  command. The scenario status is set back after optimization for reporting.
+  This directs the commands to not take leakage or dynamic power into consideration
+  and not do any power optimization.
+  - When set to leakage_power, only leakage power optimization is directed to the
+  tool. If there is an active scenario with dynamic_power analysis enabled then the 
+  RM scripts turn the dynamic_power analysis false for the clock_opt and route_opt 
+  commands. The analysis will be turned back to true after optimization for reporting.
+  This directs optimization to only do leakage power optimization and not take
+  dynamic power into consideration and cause the tool to go into total power 
+  optimization. 
+
+###############################################################################
+# Formality support updates
+###############################################################################
+
+* The scripts to run Formality have been renamed in the RM to be clearer about their
+  intended use. The contents of the scripts have not changed.
+
+  - The fm.fc.tcl script is renamed to fm_r2g.tcl for RTL to Gate
+  verification. 
+  - The fm.tcl script is renamed to fm_g2g.tcl for Gate to Gate
+  verification. 
+  - The Makefile is updated with the new script names and the targets have 
+    similarly been changed to match the new names.
+
+* The set_svf command has moved further up in primary scripts to before the block
+  is opened. This helps reducing the extraneous default*.svf files created by 
+  opening the block before set_svf is defined.
+
+###############################################################################
+# Updates to set_qor_strategy support
+###############################################################################
+
+* The ENABLE_HIGH_EFFORT_TIMING variable in fc_setup.tcl now controls the -high_effort_timing
+  option flag on the set_qor_strategy command. The default is true and will enable the
+  compile.flow.high_effort_timing application option for -stage synthesis. 
+
+* The ENABLE_REDUCED_EFFORT variable has been added to fc_setup.tcl to enable the 
+  set_qor_strategy metric target but with lower efforts. This variable is false by 
+  default and is intended for users that want to have faster runtime with a tradeoff
+  for less QoR. 
+  - When this is set to true the RM scripts ignore ENABLE_HIGH_EFFORT_TIMING
+    as the user has indicated a tradeoff of performance for better runtime. 
+  
+
+Q-2019.12-SP4 Updates
+=====================
+
+* Added high effort timing compile as default 
+* Added set_qor_strategy -stage synthesis  
+* Added in_compile DFT flow and additional DFT support
+* Added special features handling through mega switches
+* Changed init_design step to optional in Makefile
+* Changed shared_setup.tcl name to design_setup.tcl
+* Changed Setup file RM variables organization
+* Removed settings.<step>.tcl scripts
+
+###############################################################################
+# Added high effort timing compile as default 
+###############################################################################
+
+* In compile.tcl the set_stage command has added the -high_effort_timing option to enable the
+  compile.flow.high_effort_timing app_option by default in the RM flow. You can disable this by
+  changing the ENABLE_HIGH_EFFORT variable to false in the fc_setup.tcl file.
+
+  - set_stage -step synthesis -high_effort_timing
+
+###############################################################################
+# Added set_qor_strategy -stage synthesis  
+###############################################################################
+
+* The set_qor_strategy command has added synthesis support for -stage and is now added to 
+  the compile.tcl script. The set_qor_strategy command is now run before compile_fusion
+  and by default is set to the timing metric. You can change the metric to timing, leakage_power,
+  or total_power with the SET_QOR_STRATEGY_METRIC variable in the fc_setup.tcl file.
+
+  - set_qor_strategy -stage synthesis -metric $SET_QOR_STRATEGY_METRIC  
+
+###############################################################################
+# Added in_compile DFT flow and additional DFT support
+###############################################################################
+
+* The in_compile DFT flow is now supported to load DFT setup after compile_fusion logic_opto.
+  You can enable this by the DFT_FLOW variable by setting it to in_compile. This will load 
+  the DFT_SETUP_FILE after logic_opto and enable the dft.insertion_post_logic_opto 
+  app_option 
+
+  There is also a new plugin file for the in_compile flow with the variable
+  TCL_DFT_PRE_IN_COMPILE_SETUP_FILE in fc_setup.tcl file. This plugin file is available to load
+  setup commands like set_scan_element and set_wrapper_configuration -reuse_threshold that
+  are necessary to be setup before compile_fusion.
+
+  Additionally, there is a new DFT_MODES_LIST variable in the fc_seutp.tcl for you to
+  define the test modes for dft_drc and write_test_protocol to work on after initial_opto and
+  final_opto in compile.tcl 
+
+###############################################################################
+# Added special features handling through mega switches
+###############################################################################
+
+* Special features that are different than the default RM flow are available through the 
+  fc_setup.tcl file. When enabled, the features are setup in the RM scripts or through the 
+  set_stage mega switch. For more information, see these features in the fc_setup.tcl file 
+  under the header "Special features".
+
+###############################################################################
+# Changed init_design step to optional in Makefile
+###############################################################################
+
+* The init_design step, still default in the flow, is now optional through the Makefile.
+  In the Makefile set the INIT_DESIGN variable to false to start the flow from compile.
+  This is for users that have their own data preparation scripts to create a compile
+  ready database. 
+
+###############################################################################
+# Changed shared_setup.tcl name to design_setup.tcl
+###############################################################################
+ 
+* The shared_setup.tcl file has been renamed to design_setup.tcl file. The file has been 
+  reorganized to make it more consistent for design input collaterals,
+  design plugin files, and system setup. 
+
+###############################################################################
+# Changed Setup file RM variables Organization
+###############################################################################
+
+* The RM variables in design_setup.tcl and fc_setup.tcl have been reorgnized to 
+  focus the two files under the following guidance.
+ 
+  - design_setup.tcl 
+    A file for design specific setup variables. This includes design input files
+    such as RTL, Floorplan, UPF, and reference libraries. It is also a file for design 
+    specific plugin file definitions for user defined to be sourced before or after 
+    major command steps. System related variables for block names, reporting, and 
+    the search_path are also defined in this file.
+
+  - fc_setup.tcl
+    A file for special features and control of the RM flow. This file defines variables
+    to control features and flows in the RM for different steps. For instance, defining the
+    Multisource Clock Tree Synthesis flow or the Path Based Analysis Optimization for 
+    post-route. Variables defined here enables these features through a combination of 
+    RM script flow changes and/or the set_stage mega switch.
+
+###############################################################################
+# Removed settings.<step>.tcl scripts
+###############################################################################
+
+* The settings.<step>.tcl files have been removed and consolidated into the main command
+  scripts and mega switches. The contents of the settings.<step>.tcl files typically applied
+  different app_option settings based on fc_setup.tcl variable definitions or sourced plugin
+  files to define things like non-default routing rules. The sourcing of plugin files moved
+  to the main scripts and the settings applications have been put into the set_stage mega
+  switch. Based on the feature variables defined in the fc_setup.tcl set_stage performs 
+  different app_option setup for the specified step.
