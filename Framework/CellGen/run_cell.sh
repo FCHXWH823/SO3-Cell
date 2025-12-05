@@ -26,7 +26,7 @@ CELLS=("$@")
 if [ ${#CELLS[@]} -eq 0 ]; then
   #CELLS=(INV_X1 NAND2_X1)
   #CELLS=(NAND2_X1)
-  CELLS=(INV_X1)
+  #CELLS=(INV_X1)
 fi
 
 echo "[RUN]" "$PYTHON" "$RUNNER" \
