@@ -65,20 +65,26 @@ cd Framework/CellGen
 Next, run the `run_cell.sh` script. This will initiate the cell generation flow, from reading the netlist to generating the final GDSII layout file.
 
 ```bash
-./run_cell.sh
+./run_cell.sh --help
 
-# Single-height (default)
-./run_cell.sh NAND2_X1
+# Generate all cells from a CDL name under Enablement/cdl
+./run_cell.sh --cdl-name SO3_L1
 
-# Double-height, N-first
-ARCH=DH MH_ORDER=N_FIRST ./run_cell.sh NAND2_X1
+# Single-height (default) specific cells
+./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1 INV_X1"
 
-# Double-height, P-first
-ARCH=DH MH_ORDER=P_FIRST ./run_cell.sh NAND2_X1
+# Double-height, N-first (NMOS row at bottom, PMOS row on top)
+ARCH=DH MH_ORDER=N_FIRST ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1"
 
-# Multiple cells
-ARCH=SH ./run_cell.sh INV_X1 NAND2_X1 AOI21_X1
+# Double-height, P-first (PMOS row at bottom, NMOS row on top)
+ARCH=DH MH_ORDER=P_FIRST ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1"
 ```
+
+`run_cell.sh` wraps `bin/run_cell.py` (unified dispatcher `src/ILP_SO3_flex.py`), sets `PYTHONPATH` to include `Framework/CellGen/src`, and organizes outputs:
+- `results/gds/` : GDS files emitted by KLayout (`.gds`). Default destination; override with `GDS_OUT`.
+- `results/ilp/<cell>/<cell>` : ILP textual result per cell (solver summary, placement, routing info).
+- `logs/gurobi/<cell>/gurobi.log` : Gurobi solver log per cell.
+- `logs/models/<cell>/<cell>.lp|.mps|.prm` : ILP model snapshots (`.lp` human-readable, `.mps` exact) and parameter file (`.prm`) for reproducibility.
 
 ### Standard Cell Verification and Characterization
 In this part, LVS/PEX and cell characterization are performed for the generated standard cells.
@@ -123,4 +129,3 @@ Please note that running this step requires license for *Synopsys Fusion Compile
 \[1\] C.-K. Cheng, A. B. Kahng, B. Kang, S. Kang, J. Lee, and B. Lin, “SO3-Cell: Standard Cell Layout Automation Framework for Simultaneous Optimization of Topology, Placement, and Routing,” in Proceedings of International Conference on Computer-Aided Design (ICCAD) (2025). [(link)](https://vlsicad.ucsd.edu/Publications/Conferences/418/c418.pdf)
  
 \[2\] S. Choi, J. Jung, A. B. Kahng, M. Kim, C. Park, B. Pramanik, and D. Yoon. “PROBE3. 0: a systematic framework for design-technology pathfinding with improved design enablement.” IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems (TCAD) (2023). [(link)](https://vlsicad.ucsd.edu/Publications/Journals/j143.pdf)
-
