@@ -23,7 +23,28 @@ lvs_cname no -pin
 lvs_ignore_ports no
 lvs_compare_port_names yes
 lvs_recognize_gates -none
-lvs_reduce_split_gates yes -semi_also
+lvs_reduce_split_gates MP(pmos_rvt) yes -same_order [tolerance W 0 L 0 nfin 0
+ effective L,W,nfin
+ W = sum(W)
+ L = min(L)
+ checkForZero = sum(nfin)
+ if (checkForZero == 0)
+ nfin = 1
+ else
+ nfin = sum(nfin)
+]
+lvs_reduce_split_gates MN(nmos_rvt) yes -same_order [tolerance W 0 L 0 nfin 0
+ effective L,W,nfin
+ W = sum(W)
+ L = min(L)
+ checkForZero = sum(nfin)
+ if (checkForZero == 0)
+ nfin = 1
+ else
+ nfin = sum(nfin)
+]
+lvs_push_devices_properties yes
+lvs_preserve_parameterized_cells yes
 
 virtual_connect -name "VDD" "VSS" -report yes
 
@@ -216,7 +237,7 @@ lvs_device_type PMOS MP
 lvs_check_property MP(pmos_rvt) L L -tolerance 0
 lvs_check_property MP(pmos_rvt) W W -tolerance 0
 lvs_check_property MP(pmos_rvt) nfin nfin -tolerance 0
-lvs_reduce_device MP (pmos_rvt) -parallel yes [tolerance L 0 W 0 
+lvs_reduce_device MP (pmos_rvt) -parallel yes [tolerance L 0 W 0 nfin 0
  effective L,W,nfin
  W = sum(W)
  L = min(L)
@@ -238,7 +259,7 @@ lvs_device_type NMOS MN
 lvs_check_property MN(nmos_rvt) L L -tolerance 0
 lvs_check_property MN(nmos_rvt) W W -tolerance 0
 lvs_check_property MN(nmos_rvt) nfin nfin -tolerance 0
-lvs_reduce_device MN (nmos_rvt) -parallel yes [tolerance L 0 W 0 
+lvs_reduce_device MN (nmos_rvt) -parallel yes [tolerance L 0 W 0 nfin 0
  effective L,W,nfin
  W = sum(W)
  L = min(L)
