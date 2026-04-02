@@ -31,24 +31,94 @@ To set up and run this project, you will need the following dependencies install
 
 ### System Dependencies
 
-*   **Python** (version 3.10)
-*   **KLayout** (version 0.29)
-*   **Gurobi** (version 12.0.1) with valid license
+*   **Conda** (Miniconda or Anaconda) — recommended for environment management
+*   **Python** 3.10 (managed via conda)
+*   **Gurobi** 13.x with a valid license
 
 ### Gurobi License
 
-This project utilizes **Gurobi** as its MILP (Mixed-Integer Linear Programming) solver. Therefore, a valid Gurobi license is required to run the framework.
+This project uses **Gurobi** as its MILP solver. A valid license is required.
 
-If you are a student or a member of a university faculty, Gurobi provides a **free, full-featured academic license**. Please visit the link below to register and obtain your license:
+Students and faculty can obtain a **free, full-featured academic license** at:
 
 *   [Gurobi Academic Program & Licenses](https://www.gurobi.com/academia/academic-program-and-licenses/)
 
-### Python Packages
+After downloading the license file (`gurobi.lic`), place it in your home directory (`~/gurobi.lic`).
 
-Install the required Python packages using pip:
+---
+
+## Environment Setup
+
+### 1. Create and activate a conda environment
 
 ```bash
+conda create -n so3 python=3.10 -y
+conda activate so3
+```
+
+### 2. Install Gurobi
+
+```bash
+# Install gurobipy (Python API + bundled solver)
 pip install gurobipy
+
+# Activate your Gurobi license (run once; requires ~/gurobi.lic to be present)
+python -c "import gurobipy; gurobipy.Model()"
+```
+
+### 3. Install KLayout (Python API)
+
+KLayout is used to generate GDS files. Install it as a Python package:
+
+```bash
+pip install klayout
+```
+
+Since the `klayout` Python package does not install a standalone CLI binary, create a
+small shim script so `run_cell.sh` can invoke it by name:
+
+```bash
+KLAYOUT_BIN="$(python -c 'import sys; print(sys.prefix)')/bin/klayout"
+
+cat > "$KLAYOUT_BIN" << 'EOF'
+#!/usr/bin/env python3
+"""Minimal klayout -b -r <script> shim for the SO3-Cell pipeline."""
+import sys, runpy
+
+def main():
+    args, script, i = sys.argv[1:], None, 0
+    while i < len(args):
+        if args[i] == '-r' and i + 1 < len(args):
+            script = args[i + 1]; i += 2
+        else:
+            i += 1
+    if script is None:
+        print("klayout shim: no -r argument", file=sys.stderr); sys.exit(1)
+    runpy.run_path(script, run_name="__main__")
+
+if __name__ == "__main__":
+    main()
+EOF
+
+chmod +x "$KLAYOUT_BIN"
+echo "Shim written to $KLAYOUT_BIN"
+```
+
+### 4. Set tool paths for the run script
+
+`run_cell.sh` reads the `PYTHON` and `KLAYOUT` environment variables.
+Set them to point to your conda environment before running:
+
+```bash
+export PYTHON=$(conda run -n so3 python -c "import sys; print(sys.executable)")
+export KLAYOUT="$(dirname $PYTHON)/klayout"
+```
+
+Or, if the `so3` environment is already active:
+
+```bash
+export PYTHON=$(which python)
+export KLAYOUT="$(dirname $PYTHON)/klayout"
 ```
 
 ## Running the Framework
@@ -56,28 +126,35 @@ pip install gurobipy
 ### Standard Cell Generation
 Follow these steps to generate the standard cell layouts.
 
-First, change your current directory to the `Framework/CellGen` directory, which contains the main execution script.
+First, activate the environment and change to the `Framework/CellGen` directory:
 
 ```bash
+conda activate so3
+export PYTHON=$(which python)
+export KLAYOUT="$(dirname $PYTHON)/klayout"
 cd Framework/CellGen
 ```
 
-Next, run the `run_cell.sh` script. This will initiate the cell generation flow, from reading the netlist to generating the final GDSII layout file.
+Next, run the `run_cell.sh` script:
 
 ```bash
 ./run_cell.sh --help
 
-# Generate all cells from a CDL name under Enablement/cdl
+# Generate all cells from a CDL file under Enablement/cdl
 ./run_cell.sh --cdl-name SO3_L1
 
-# Single-height (default) specific cells
+# Single-height (default) — specific cells
 ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1 INV_X1"
 
 # Double-height, N-first (NMOS row at bottom, PMOS row on top)
-ARCH=DH MH_ORDER=N_FIRST ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1"
+./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH
 
 # Double-height, P-first (PMOS row at bottom, NMOS row on top)
-ARCH=DH MH_ORDER=P_FIRST ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1"
+./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH --mh-order P_FIRST
+
+# Use topology-optimization-free ILP (faster, looser constraints)
+./run_cell.sh --cdl-name SO3_L1 --cells "INV_X1" --ilp-script src/ILP_notopo.py
+./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH --ilp-script src/ILP_notopo.py
 ```
 
 `run_cell.sh` wraps `bin/run_cell.py` (unified dispatcher `src/ILP_SO3_flex.py`), sets `PYTHONPATH` to include `Framework/CellGen/src`, and organizes outputs:
@@ -85,6 +162,17 @@ ARCH=DH MH_ORDER=P_FIRST ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1"
 - `results/ilp/<cell>/<cell>` : ILP textual result per cell (solver summary, placement, routing info).
 - `logs/gurobi/<cell>/gurobi.log` : Gurobi solver log per cell.
 - `logs/models/<cell>/<cell>.lp|.mps|.prm` : ILP model snapshots (`.lp` human-readable, `.mps` exact) and parameter file (`.prm`) for reproducibility.
+
+#### ILP script variants
+
+| Script | Description |
+|---|---|
+| `src/ILP_SO3_flex.py` | Default — full SO3 with topology optimization (SH and DH via embedded blobs) |
+| `src/ILP_notopo.py` | Dispatcher for topology-free variants; auto-selects SH or DH from `--arch` / `--mh-order` |
+| `src/ILP_SH_notopo.py` | Single-height ILP without topology optimization constraints |
+| `src/ILP_DH_notopo.py` | Double-height ILP without topology optimization constraints |
+
+Pass any of these via `--ilp-script` to override the default.
 
 ### Standard Cell Verification and Characterization
 In this part, LVS/PEX and cell characterization are performed for the generated standard cells.
