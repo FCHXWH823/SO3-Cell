@@ -14,6 +14,7 @@ model.setParam('OutputFlag', 1)
 model.setParam('LogFile', 'gurobi.log')
 model.setParam('LogToConsole', 1)
 model.setParam('DisplayInterval', 1)
+model.setParam('TimeLimit', 300)
 try:
     model.setParam('LogAppend', 1)  # keep history across runs (if supported)
 except gp.GurobiError:
@@ -1236,8 +1237,11 @@ start_time = time.perf_counter()
 model.optimize()
 end_time = time.perf_counter()
 
-if model.status == GRB.OPTIMAL:
-    pr("Optimal solution found.")
+if model.status == GRB.OPTIMAL or (model.status == GRB.TIME_LIMIT and model.SolCount > 0):
+    if model.status == GRB.OPTIMAL:
+        pr("Optimal solution found.")
+    else:
+        pr(f"Time limit reached. Best feasible solution (gap={model.MIPGap*100:.2f}%).")
     total_cost = model.objVal
     best_via_locations = {
         net: [(1,via_positions[v]) for v in via_indices if v_n_v[net][v].X > 0.5] for net in total_nets if net not in power_net
@@ -1344,7 +1348,131 @@ if model.status == GRB.OPTIMAL:
     
     for c in gate_cols:
         print (f"Column : {c}, {a_c[c].X}, {b_c[c].X}, {misalign_c[c].X}, {e_c[c].getValue()}")
+
+    # ---- Real CPP ----
+    pmos_rightmost = 0
+    nmos_rightmost = 0
+    for c in gate_cols:
+        if pmos_net[("dummy", c)].X < 0.5:
+            pmos_rightmost = max(pmos_rightmost, (c + 1) // 2)
+        if nmos_net[("dummy", c)].X < 0.5:
+            nmos_rightmost = max(nmos_rightmost, (c + 1) // 2)
+    real_cpp = max(pmos_rightmost, nmos_rightmost) + 1
+    pr(f"\n===== Metrics Summary =====")
+    pr(f"Pre-allocated num_cols (2*max(|PMOS|,|NMOS|)+1): {num_cols}")
+    pr(f"Real used CPP: {real_cpp}")
+    pr(f"  PMOS rightmost gate pos: {pmos_rightmost}")
+    pr(f"  NMOS rightmost gate pos: {nmos_rightmost}")
+
+    # ---- Routing metrics ----
+    if routing_switch == 'on':
+        # M0 track usage
+        total_m0_segments = sum(t_n_c_r[net][c, r].X
+                                for net in total_nets if net not in power_net
+                                for c in columns for r in rows)
+        # M2 (upper) track usage
+        total_m2_segments = sum(ut_n_c_r[net][c, r].X
+                                for net in total_nets if net not in power_net
+                                for c in columns for r in upper_rows)
+        # Via counts
+        total_v0_vias = sum(v_n_v[net][v].X
+                            for net in total_nets if net not in power_net
+                            for v in via_indices)
+        # EOL
+        total_eol = sum(t_n_c_r[new_net_name][c, r].X
+                        for c in columns for r in rows)
+        total_upper_eol = sum(ut_n_c_r[new_net_name][c, r].X
+                              for c in columns for r in upper_rows)
+        # Cost breakdown
+        cost_m0    = 3 * sum(t_c[c].X for c in columns)
+        cost_m2    = 2 * 6 * sum(ut_c[c].X for c in columns)
+        cost_via   = sum(
+            (60 if 4*(v+1) % 3 != 0 else 100) * v_n_v[net][v].X
+            for net in total_nets if net not in power_net
+            for v in via_indices)
+        cost_eol_m0 = 1 * total_eol
+        cost_eol_m2 = 6 * total_upper_eol
+
+        pr(f"\n--- Routing Metrics ---")
+        pr(f"Total M0 wire segments: {int(round(total_m0_segments))}")
+        pr(f"Total M2 wire segments: {int(round(total_m2_segments))}")
+        pr(f"Total V0 vias: {int(round(total_v0_vias))}")
+        pr(f"Total EOL (M0): {int(round(total_eol))}")
+        pr(f"Total EOL (M2): {int(round(total_upper_eol))}")
+
+        pr(f"\n--- Cost Breakdown ---")
+        pr(f"M0 track cost (×3):   {round(cost_m0, 1)}")
+        pr(f"M2 track cost (×12):  {round(cost_m2, 1)}")
+        pr(f"Via cost:             {round(cost_via, 1)}")
+        pr(f"EOL M0 cost (×1):    {round(cost_eol_m0, 1)}")
+        pr(f"EOL M2 cost (×6):    {round(cost_eol_m2, 1)}")
+        try:
+            obs_val = sum(obs_misalign_penalty[r].X for r in upper_rows)
+            pr(f"OBS penalty (×100):  {round(100 * obs_val, 1)}")
+        except Exception:
+            pass
+        try:
+            pe_val = sum(pin_extend_reward[c].getValue() for c in search_columns)
+            pr(f"Pin extendability:   -{round(pe_val, 1)}")
+        except Exception:
+            pass
+        try:
+            ps_val = sum(z_dict[idx].X for idx in z_dict)
+            pr(f"Pin separation:      -{round(ps_val, 1)}")
+        except Exception:
+            pass
+        pr(f"Total objective:      {round(total_cost, 1)}")
+
 else:
-    pr("No optimal solution found.")
+    if model.status == GRB.TIME_LIMIT:
+        pr("Time limit reached with no feasible solution found.")
+    else:
+        pr("No optimal solution found.")
 
 pr ("Runtime : ",round(end_time-start_time,3))
+
+# ---- Write metrics CSV ----
+import csv as _csv_mod
+_runtime = round(end_time - start_time, 3)
+if model.status == GRB.OPTIMAL:
+    _status = "optimal"; _gap = 0.0
+elif model.status == GRB.TIME_LIMIT and model.SolCount > 0:
+    _status = "time_limit_feasible"; _gap = round(model.MIPGap * 100, 2)
+elif model.status == GRB.TIME_LIMIT:
+    _status = "time_limit_infeasible"; _gap = ""
+elif model.status == GRB.INFEASIBLE:
+    _status = "infeasible"; _gap = ""
+else:
+    _status = f"status_{model.status}"; _gap = ""
+
+def _safe(fn):
+    try: return fn()
+    except Exception: return ""
+
+_row = {
+    "cell":             cell_name_for_io,
+    "status":           _status,
+    "mip_gap_pct":      _gap,
+    "runtime_s":        _runtime,
+    "cpp_preallocated": _safe(lambda: num_cols),
+    "cpp_real":         _safe(lambda: real_cpp),
+    "m0_segments":      _safe(lambda: int(round(total_m0_segments))),
+    "m2_segments":      _safe(lambda: int(round(total_m2_segments))),
+    "v0_vias":          _safe(lambda: int(round(total_v0_vias))),
+    "eol_m0":           _safe(lambda: int(round(total_eol))),
+    "eol_m2":           _safe(lambda: int(round(total_upper_eol))),
+    "cost_m0":          _safe(lambda: round(cost_m0, 1)),
+    "cost_m2":          _safe(lambda: round(cost_m2, 1)),
+    "cost_via":         _safe(lambda: round(cost_via, 1)),
+    "cost_eol_m0":      _safe(lambda: round(cost_eol_m0, 1)),
+    "cost_eol_m2":      _safe(lambda: round(cost_eol_m2, 1)),
+    "cost_obs":         _safe(lambda: round(100 * sum(obs_misalign_penalty[r].X for r in upper_rows), 1)),
+    "cost_pin_sep":     _safe(lambda: round(sum(z_dict[idx].X for idx in z_dict), 1)),
+    "total_objective":  _safe(lambda: round(total_cost, 1)),
+}
+_csv_path = cell_name_for_io + ".csv"
+with open(_csv_path, "w", newline="", encoding="utf-8") as _fcsv:
+    _w = _csv_mod.DictWriter(_fcsv, fieldnames=list(_row.keys()))
+    _w.writeheader()
+    _w.writerow(_row)
+print(f"Metrics CSV written: {_csv_path}")

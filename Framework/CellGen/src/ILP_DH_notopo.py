@@ -1803,3 +1803,35 @@ if model.status == GRB.OPTIMAL:
 else:
     pr("No optimal solution found.")
 pr ("Runtime : ",round(end_time-start_time,3))
+
+# ---- Write metrics CSV ----
+import csv as _csv_mod
+_runtime = round(end_time - start_time, 3)
+if model.status == GRB.OPTIMAL:
+    _status = "optimal"; _gap = 0.0
+elif model.status == GRB.TIME_LIMIT and model.SolCount > 0:
+    _status = "time_limit_feasible"; _gap = round(model.MIPGap * 100, 2)
+elif model.status == GRB.TIME_LIMIT:
+    _status = "time_limit_infeasible"; _gap = ""
+elif model.status == GRB.INFEASIBLE:
+    _status = "infeasible"; _gap = ""
+else:
+    _status = f"status_{model.status}"; _gap = ""
+
+def _safe(fn):
+    try: return fn()
+    except Exception: return ""
+
+_row = {
+    "cell":            cell_name_for_io,
+    "status":          _status,
+    "mip_gap_pct":     _gap,
+    "runtime_s":       _runtime,
+    "total_objective": _safe(lambda: round(total_cost, 1)),
+}
+_csv_path = cell_name_for_io + ".csv"
+with open(_csv_path, "w", newline="", encoding="utf-8") as _fcsv:
+    _w = _csv_mod.DictWriter(_fcsv, fieldnames=list(_row.keys()))
+    _w.writeheader()
+    _w.writerow(_row)
+print(f"Metrics CSV written: {_csv_path}")

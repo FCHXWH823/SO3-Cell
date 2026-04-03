@@ -135,29 +135,76 @@ export KLAYOUT="$(dirname $PYTHON)/klayout"
 cd Framework/CellGen
 ```
 
-Next, run the `run_cell.sh` script:
+The ILP scripts support two modes of operation:
+
+#### Option A: Run directly (placement/routing only, no GDS layout)
+
+Useful for fast CPP and routing cost exploration without the full GDS generation step.
+Each script writes a `.csv` file alongside its result file with all key metrics.
+
+**Placement only — minimize CPP** (`ILP_SH_notopo_no_routing.py`):
 
 ```bash
-./run_cell.sh --help
+cd Framework/CellGen
 
-# Generate all cells from a CDL file under Enablement/cdl
+python src/ILP_SH_notopo_no_routing.py \
+    --cdl ../../Enablement/cdl/SO3_L1.cdl --cell INV_X1 --out-cell-name INV_X1_no_routing
+python src/ILP_SH_notopo_no_routing.py \
+    --cdl ../../Enablement/cdl/SO3_L2.cdl --cell FA_X1_SH --out-cell-name FA_X1_SH_no_routing
+# Outputs: <out-cell-name>  (placement result)
+#          <out-cell-name>.csv  (cell, status, mip_gap_pct, runtime_s, cpp_real)
+```
+
+**Placement + routing** (`ILP_SH_notopo.py`):
+
+```bash
+cd Framework/CellGen
+
+python src/ILP_SH_notopo.py \
+    --cdl ../../Enablement/cdl/SO3_L1.cdl --cell INV_X1 \
+    --dummy-for-ideal 0 --dummy-padding 0 --misalign-col 0 --out-cell-name INV_X1
+python src/ILP_SH_notopo.py \
+    --cdl ../../Enablement/cdl/SO3_L2.cdl --cell FA_X1_SH \
+    --dummy-for-ideal 0 --dummy-padding 0 --misalign-col 0 --out-cell-name FA_X1_SH
+# Outputs: <out-cell-name>  (placement + routing result)
+#          <out-cell-name>.csv  (cell, status, mip_gap_pct, runtime_s, cpp_real,
+#                                m0_segments, m2_segments, v0_vias, eol_m0, eol_m2,
+#                                cost breakdown, total_objective)
+# Note: Gurobi time limit is 300 seconds by default.
+```
+
+#### Option B: Run via `run_cell.sh` (full flow — placement, routing, and GDS layout)
+
+`run_cell.sh` runs the ILP solver and then calls KLayout to generate the final GDS layout.
+
+```bash
+cd Framework/CellGen
+
+# Generate all cells in a CDL file (default ILP: ILP_SO3_flex.py with topology optimization)
 ./run_cell.sh --cdl-name SO3_L1
 
-# Single-height (default) — specific cells
+# Single-height, specific cells (default ILP)
 ./run_cell.sh --cdl-name SO3_L1 --cells "NAND2_X1 INV_X1"
 
-# Double-height, N-first (NMOS row at bottom, PMOS row on top)
+# Single-height, no topology optimization (ILP_SH_notopo.py)
+./run_cell.sh --cdl-name SO3_L1 --cells "INV_X1"   --ilp-script src/ILP_SH_notopo.py
+./run_cell.sh --cdl-name SO3_L2 --cells "FA_X1_SH" --ilp-script src/ILP_SH_notopo.py
+
+# Double-height, N-first (NMOS row at bottom, PMOS row on top) — default ILP
 ./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH
 
 # Double-height, P-first (PMOS row at bottom, NMOS row on top)
 ./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH --mh-order P_FIRST
 
-# Use topology-optimization-free ILP (faster, looser constraints)
-./run_cell.sh --cdl-name SO3_L1 --cells "INV_X1" --ilp-script src/ILP_notopo.py
+# Double-height, no topology optimization (ILP_DH_notopo.py)
+./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH --ilp-script src/ILP_DH_notopo.py
+
+# Topology-free dispatcher (auto-selects SH or DH based on --arch / --mh-order)
+./run_cell.sh --cdl-name SO3_L1 --cells "INV_X1"   --ilp-script src/ILP_notopo.py
 ./run_cell.sh --cdl-name SO3_L3 --cells "FA_X1_DH" --arch DH --ilp-script src/ILP_notopo.py
 ```
 
-`run_cell.sh` wraps `bin/run_cell.py` (unified dispatcher `src/ILP_SO3_flex.py`), sets `PYTHONPATH` to include `Framework/CellGen/src`, and organizes outputs:
+`run_cell.sh` wraps `bin/run_cell.py`, sets `PYTHONPATH` to include `Framework/CellGen/src`, and organizes outputs:
 - `results/gds/` : GDS files emitted by KLayout (`.gds`). Default destination; override with `GDS_OUT`.
 - `results/ilp/<cell>/<cell>` : ILP textual result per cell (solver summary, placement, routing info).
 - `logs/gurobi/<cell>/gurobi.log` : Gurobi solver log per cell.
@@ -165,14 +212,17 @@ Next, run the `run_cell.sh` script:
 
 #### ILP script variants
 
-| Script | Description |
-|---|---|
-| `src/ILP_SO3_flex.py` | Default — full SO3 with topology optimization (SH and DH via embedded blobs) |
-| `src/ILP_notopo.py` | Dispatcher for topology-free variants; auto-selects SH or DH from `--arch` / `--mh-order` |
-| `src/ILP_SH_notopo.py` | Single-height ILP without topology optimization constraints |
-| `src/ILP_DH_notopo.py` | Double-height ILP without topology optimization constraints |
+| Script | Arch | Topology opt | Routing opt | Objective | Notes |
+|---|---|---|---|---|---|
+| `src/ILP_SO3_flex.py` | SH + DH | ✓ | ✓ | Routing cost | Default; dispatches SH/DH internally |
+| `src/ILP_notopo.py` | SH + DH | ✗ | ✓ | Routing cost | Dispatcher; auto-selects SH or DH from `--arch` / `--mh-order` |
+| `src/ILP_SH_notopo.py` | SH | ✗ | ✓ | Routing cost | Single-height, full placement + routing; reports real CPP and routing metrics after solve |
+| `src/ILP_DH_notopo.py` | DH | ✗ | ✓ | Routing cost | Double-height variant of the above |
+| `src/ILP_SH_notopo_no_routing.py` | SH | ✗ | ✗ | **Minimize CPP** | Placement-only (no routing variables); fastest solver; useful for CPP estimation |
 
-Pass any of these via `--ilp-script` to override the default.
+Pass any of these (except `ILP_SH_notopo_no_routing.py`) via `--ilp-script` to `run_cell.sh`.
+
+> **Note:** `src/ILP_SH_notopo_no_routing.py` cannot be used with `run_cell.sh` (it produces no placement result file for the GDS step). Run it directly as shown in Option A above.
 
 ### Standard Cell Verification and Characterization
 In this part, LVS/PEX and cell characterization are performed for the generated standard cells.
