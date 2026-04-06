@@ -1,0 +1,22 @@
+.SUBCKT P360 A B C D Ab Bb Cb Db OUT VDD VSS
+MM0 n2 D VSS VSS nmos_rvt w=81n l=20n nfin=3
+MM1 n2 Cb VSS VSS nmos_rvt w=81n l=20n nfin=3
+MM2 n3 A VSS VSS nmos_rvt w=81n l=20n nfin=3
+MM3 n4 Ab VSS VSS nmos_rvt w=81n l=20n nfin=3
+MM4 n4 Db n1 VSS nmos_rvt w=81n l=20n nfin=3
+MM5 OUT Cb n1 VSS nmos_rvt w=81n l=20n nfin=3
+MM6 n3 B n2 VSS nmos_rvt w=81n l=20n nfin=3
+MM7 n4 Bb n2 VSS nmos_rvt w=81n l=20n nfin=3
+MM8 OUT C n2 VSS nmos_rvt w=81n l=20n nfin=3
+MM9 OUT D n3 VSS nmos_rvt w=81n l=20n nfin=3
+MM10 p1 C VDD VDD pmos_rvt w=81n l=20n nfin=3
+MM11 p2 A VDD VDD pmos_rvt w=81n l=20n nfin=3
+MM12 p4 Cb VDD VDD pmos_rvt w=81n l=20n nfin=3
+MM13 p2 Bb p1 VDD pmos_rvt w=81n l=20n nfin=3
+MM14 p3 Cb p1 VDD pmos_rvt w=81n l=20n nfin=3
+MM15 p3 Ab p2 VDD pmos_rvt w=81n l=20n nfin=3
+MM16 p4 B p2 VDD pmos_rvt w=81n l=20n nfin=3
+MM17 OUT D p3 VDD pmos_rvt w=81n l=20n nfin=3
+MM18 p5 C p4 VDD pmos_rvt w=81n l=20n nfin=3
+MM19 OUT Db p5 VDD pmos_rvt w=81n l=20n nfin=3
+.ENDS P360

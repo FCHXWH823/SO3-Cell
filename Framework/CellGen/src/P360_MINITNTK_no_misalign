@@ -1,0 +1,3 @@
+Best feasible solution (status=11, gap=42.11%).
+PMOS: 1  ['G', 'dummy', 'VDD', 'E', 'p2', 'dummy', 'p1', 'C', 'p3', 'D', 'ZN', 'dummy', 'p2', 'A', 'p3', 'B', 'p4', 'F', 'VDD', 'H', 'p4', 'E', 'p1', 'dummy', 'p1', 'A', 'ZN', 'dummy', 'VDD', 'dummy', 'F', 'dummy', 'p1', 'dummy', 'ZN', 'dummy', 'p4', 'G', 'p2', 'dummy', 'E', 'dummy', 'A']
+NMOS: 1  ['VSS', 'dummy', 'n4', 'dummy', 'F', 'dummy', 'ZN', 'C', 'n1', 'D', 'n3', 'dummy', 'n1', 'A', 'n2', 'B', 'VSS', 'F', 'n3', 'H', 'n4', 'E', 'n2', 'dummy', 'n4', 'dummy', 'C', 'dummy', 'n2', 'D', 'ZN', 'dummy', 'n2', 'F', 'ZN', 'dummy', 'n4', 'G', 'ZN', 'dummy', 'n2', 'dummy', 'n4']

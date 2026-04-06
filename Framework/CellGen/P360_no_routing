@@ -1,0 +1,25 @@
+Optimal solution found.
+Optimal CPP: 16
+  PMOS MM10: gate_col=1, gate_pos=1, orient=0, G=C, D=p1, S=VDD, Mode3(PMOS-only)
+  PMOS MM11: gate_col=11, gate_pos=6, orient=1, G=A, D=p2, S=VDD, Mode1
+  PMOS MM12: gate_col=13, gate_pos=7, orient=0, G=Cb, D=p4, S=VDD, Mode1
+  PMOS MM13: gate_col=23, gate_pos=12, orient=1, G=Bb, D=p2, S=p1, Mode1
+  PMOS MM14: gate_col=31, gate_pos=16, orient=0, G=Cb, D=p3, S=p1, Mode1
+  PMOS MM15: gate_col=21, gate_pos=11, orient=1, G=Ab, D=p3, S=p2, Mode1
+  PMOS MM16: gate_col=9, gate_pos=5, orient=1, G=B, D=p4, S=p2, Mode1
+  PMOS MM17: gate_col=19, gate_pos=10, orient=1, G=D, D=OUT, S=p3, Mode1
+  PMOS MM18: gate_col=15, gate_pos=8, orient=0, G=C, D=p5, S=p4, Mode1
+  PMOS MM19: gate_col=5, gate_pos=3, orient=0, G=Db, D=OUT, S=p5, Mode1
+  NMOS MM0: gate_col=19, gate_pos=10, orient=1, G=D, D=n2, S=VSS, Mode1
+  NMOS MM1: gate_col=13, gate_pos=7, orient=0, G=Cb, D=n2, S=VSS, Mode1
+  NMOS MM2: gate_col=11, gate_pos=6, orient=1, G=A, D=n3, S=VSS, Mode1
+  NMOS MM3: gate_col=21, gate_pos=11, orient=0, G=Ab, D=n4, S=VSS, Mode1
+  NMOS MM4: gate_col=5, gate_pos=3, orient=0, G=Db, D=n4, S=n1, Mode1
+  NMOS MM5: gate_col=31, gate_pos=16, orient=0, G=Cb, D=OUT, S=n1, Mode1
+  NMOS MM6: gate_col=9, gate_pos=5, orient=0, G=B, D=n3, S=n2, Mode1
+  NMOS MM7: gate_col=23, gate_pos=12, orient=1, G=Bb, D=n4, S=n2, Mode1
+  NMOS MM8: gate_col=15, gate_pos=8, orient=0, G=C, D=OUT, S=n2, Mode1
+  NMOS MM9: gate_col=27, gate_pos=14, orient=0, G=D, D=OUT, S=n3, Mode3(NMOS-only)
+PMOS: 1 ['VDD', 'C', 'p1', 'dummy', 'p5', 'Db', 'OUT', 'dummy', 'p4', 'B', 'p2', 'A', 'VDD', 'Cb', 'p4', 'C', 'p5', 'dummy', 'OUT', 'D', 'p3', 'Ab', 'p2', 'Bb', 'p1', 'dummy', 'p1', 'dummy', 'p2', 'dummy', 'p1']
+NMOS: 1 ['OUT', 'dummy', 'VSS', 'dummy', 'n1', 'Db', 'n4', 'dummy', 'n2', 'B', 'n3', 'A', 'VSS', 'Cb', 'n2', 'C', 'OUT', 'dummy', 'n2', 'D', 'VSS', 'Ab', 'n4', 'Bb', 'n2', 'dummy', 'n3', 'D', 'OUT', 'dummy', 'n1']
+Runtime: 26.753s

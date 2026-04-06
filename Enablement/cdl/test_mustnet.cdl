@@ -1,0 +1,23 @@
+.SUBCKT P360_MUSTNET A B C D E F G H VDD VSS ZN
+MM0 ZN A n8 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM1 n4 B n1 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM2 n8 C n7 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM3 n8 D n4 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM4 ZN E n1 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM5 n4 F VSS VSS nmos_rvt w=46.0n l=16n nfin=2
+MM6 n7 G n1 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM7 n4 H n1 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM8 ZN F n7 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM9 n7 B VSS VSS nmos_rvt w=46.0n l=16n nfin=2
+MM10 p7 A p3 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM11 ZN B p9 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM12 p7 C VDD VDD pmos_rvt w=46.0n l=16n nfin=2
+MM13 p7 D p2 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM14 p5 E p2 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM15 ZN F p5 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM16 p10 G p9 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM17 p9 H p3 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM18 p7 G p5 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM19 p3 D VDD VDD pmos_rvt w=46.0n l=16n nfin=2
+MM20 p10 E p3 VDD pmos_rvt w=46.0n l=16n nfin=2
+.ENDS

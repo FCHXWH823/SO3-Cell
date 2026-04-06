@@ -1,0 +1,29 @@
+Optimal solution found.
+Optimal CPP: 13
+  PMOS MM22: gate_col=19, gate_pos=10, orient=0, G=CI, D=SN, S=net081
+  PMOS MM21: gate_col=17, gate_pos=9, orient=0, G=B, D=net081, S=net082
+  PMOS MM20: gate_col=15, gate_pos=8, orient=0, G=A, D=net082, S=VDD
+  PMOS MM15: gate_col=21, gate_pos=11, orient=1, G=CON, D=SN, S=net027
+  PMOS MM14: gate_col=11, gate_pos=6, orient=0, G=CI, D=net027, S=VDD
+  PMOS MM13: gate_col=23, gate_pos=12, orient=1, G=B, D=net027, S=VDD
+  PMOS MM12: gate_col=13, gate_pos=7, orient=1, G=A, D=net027, S=VDD
+  PMOS MM5: gate_col=5, gate_pos=3, orient=0, G=A, D=CON, S=net37
+  PMOS MM6: gate_col=3, gate_pos=2, orient=0, G=B, D=net37, S=VDD
+  PMOS MM2: gate_col=1, gate_pos=1, orient=1, G=B, D=net27, S=VDD
+  PMOS MM1: gate_col=7, gate_pos=4, orient=1, G=CI, D=CON, S=net27
+  PMOS MM0: gate_col=9, gate_pos=5, orient=1, G=A, D=net27, S=VDD
+  NMOS MM25: gate_col=19, gate_pos=10, orient=0, G=CI, D=SN, S=net080
+  NMOS MM24: gate_col=17, gate_pos=9, orient=0, G=B, D=net080, S=net079
+  NMOS MM23: gate_col=15, gate_pos=8, orient=0, G=A, D=net079, S=VSS
+  NMOS MM19: gate_col=11, gate_pos=6, orient=1, G=CI, D=VSS, S=net067
+  NMOS MM18: gate_col=23, gate_pos=12, orient=0, G=B, D=VSS, S=net067
+  NMOS MM17: gate_col=13, gate_pos=7, orient=0, G=A, D=VSS, S=net067
+  NMOS MM16: gate_col=21, gate_pos=11, orient=0, G=CON, D=net067, S=SN
+  NMOS MM11: gate_col=1, gate_pos=1, orient=0, G=B, D=VSS, S=net25
+  NMOS MM10: gate_col=3, gate_pos=2, orient=1, G=B, D=VSS, S=net36
+  NMOS MM9: gate_col=9, gate_pos=5, orient=0, G=A, D=VSS, S=net25
+  NMOS MM8: gate_col=5, gate_pos=3, orient=1, G=A, D=net36, S=CON
+  NMOS MM7: gate_col=7, gate_pos=4, orient=0, G=CI, D=net25, S=CON
+PMOS: 1 ['net27', 'B', 'VDD', 'B', 'net37', 'A', 'CON', 'CI', 'net27', 'A', 'VDD', 'CI', 'net027', 'A', 'VDD', 'A', 'net082', 'B', 'net081', 'CI', 'SN', 'CON', 'net027', 'B', 'VDD']
+NMOS: 1 ['net25', 'B', 'VSS', 'B', 'net36', 'A', 'CON', 'CI', 'net25', 'A', 'VSS', 'CI', 'net067', 'A', 'VSS', 'A', 'net079', 'B', 'net080', 'CI', 'SN', 'CON', 'net067', 'B', 'VSS']
+Runtime: 0.702s

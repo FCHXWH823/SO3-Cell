@@ -1,0 +1,70 @@
+
+Gurobi 13.0.1 (linux64) logging started Fri Apr  3 03:57:32 2026
+
+Set parameter LogFile to value "gurobi.log"
+Set parameter LogToConsole to value 1
+Set parameter DisplayInterval to value 1
+Warning: variables 32 and 33 have the same name "temp_misalign_net_c1"
+Warning: linear constraint 15 and linear constraint 25 have the same name "avoid_different_nets_ZN_I_col_1"
+Warning: to let Gurobi read it back, use rlp format
+Warning: variables 32 and 33 have the same name "temp_misalign_net_c1"
+Warning: linear constraint 15 and linear constraint 25 have the same name "avoid_different_nets_ZN_I_col_1"
+Warning: default variable names used to write mps file
+Warning: default constraint names used to write mps file
+Gurobi Optimizer version 13.0.1 build v13.0.1rc0 (linux64 - "Red Hat Enterprise Linux 8.10 (Ootpa)")
+
+CPU model: AMD EPYC 9275F 24-Core Processor, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 24 physical cores, 48 logical processors, using up to 24 threads
+
+Non-default parameters:
+DisplayInterval  1
+
+Optimize a model with 1321 rows, 548 columns and 3708 nonzeros (Min)
+Model fingerprint: 0x58683b11
+Model has 43 linear objective coefficients
+Model has 36 simple general constraints
+  36 INDICATOR
+Variable types: 0 continuous, 548 integer (399 binary)
+Coefficient statistics:
+  Matrix range     [3e-01, 2e+01]
+  Objective range  [1e+00, 1e+02]
+  Bounds range     [1e+00, 2e+00]
+  RHS range        [1e+00, 2e+01]
+  GenCon rhs range [1e+00, 1e+00]
+  GenCon coe range [1e+00, 1e+00]
+
+Presolve removed 1141 rows and 458 columns
+Presolve time: 0.00s
+Presolved: 180 rows, 90 columns, 521 nonzeros
+Variable types: 0 continuous, 90 integer (82 binary)
+Found heuristic solution: objective 299.0000000
+Found heuristic solution: objective 263.0000000
+Found heuristic solution: objective 254.0000000
+Found heuristic solution: objective 230.0000000
+Found heuristic solution: objective 22.0000000
+
+Root relaxation: objective 9.166667e+00, 44 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    9.16667    0   18   22.00000    9.16667  58.3%     -    0s
+H    0     0                      20.0000000    9.16667  54.2%     -    0s
+H    0     0                      17.0000000    9.16667  46.1%     -    0s
+H    0     0                      15.0000000    9.16667  38.9%     -    0s
+     0     0   12.50000    0   50   15.00000   12.50000  16.7%     -    0s
+
+Cutting planes:
+  Gomory: 2
+  Clique: 2
+  Zero half: 2
+  RLT: 1
+  PSD: 1
+
+Explored 1 nodes (74 simplex iterations) in 0.02 seconds (0.01 work units)
+Thread count was 24 (of 48 available processors)
+
+Solution count 8: 15 17 20 ... 299
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.500000000000e+01, best bound 1.500000000000e+01, gap 0.0000%

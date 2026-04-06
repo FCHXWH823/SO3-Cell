@@ -1,0 +1,81 @@
+Optimal solution found.
+PMOS: 1  ['ZN', 'A1', 'VDD', 'A2', 'ZN']
+NMOS: 1  ['ZN', 'A1', 'net16', 'A2', 'VSS']
+
+t_n_c_r and ut_n_c_r values:
+  Net A2: Via positions [], []
+  Net A2, H 1, Row 3: [0, 0, 0, 0, 0]
+  Net A2, H 1, Row 2: [0, 0, 0, 0, 0]
+  Net A2, H 1, Row 1: [0, 0, 0, 0, 0]
+  Net A2, H 1, Row 0: [0, 0, 0, 1, 1]
+  Net A2, H 1, Row 7: [0, 0, 0, 0, 0]
+  Net A2, H 1, Row 6: [0, 0, 0, 0, 0]
+  Net A2, H 1, Row 5: [0, 0, 0, 0, 0]
+  Net A2, H 1, Row 4: [0, 0, 0, 0, 0]
+  Net net16: Via positions [], []
+  Net net16, H 1, Row 3: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 2: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 1: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 0: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 7: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 6: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 5: [0, 0, 0, 0, 0]
+  Net net16, H 1, Row 4: [0, 0, 0, 0, 0]
+  Net A1: Via positions [], []
+  Net A1, H 1, Row 3: [1, 1, 0, 0, 0]
+  Net A1, H 1, Row 2: [0, 0, 0, 0, 0]
+  Net A1, H 1, Row 1: [0, 0, 0, 0, 0]
+  Net A1, H 1, Row 0: [0, 0, 0, 0, 0]
+  Net A1, H 1, Row 7: [0, 0, 0, 0, 0]
+  Net A1, H 1, Row 6: [0, 0, 0, 0, 0]
+  Net A1, H 1, Row 5: [0, 0, 0, 0, 0]
+  Net A1, H 1, Row 4: [0, 0, 0, 0, 0]
+  Net ZN: Via positions [], []
+  Net ZN, H 1, Row 3: [0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 2: [1, 1, 1, 1, 1]
+  Net ZN, H 1, Row 1: [0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 0: [0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 7: [0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 6: [0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 5: [0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 4: [0, 0, 0, 0, 0]
+  Net eol, Row 3: [0, 0, 1, 0, 0]
+  Net eol, Row 2: [0, 0, 0, 0, 0]
+  Net eol, Row 1: [0, 0, 0, 0, 0]
+  Net eol, Row 0: [0, 0, 1, 0, 0]
+  Net eol, Row 7: [0, 0, 0, 0, 0]
+  Net eol, Row 6: [0, 0, 0, 0, 0]
+  Net eol, Row 5: [0, 0, 0, 0, 0]
+  Net eol, Row 4: [0, 0, 0, 0, 0]
+
+Optimal total cost: 24.0
+Optimal Via positions:
+  Net A2: Via positions []
+  Net net16: Via positions []
+  Net A1: Via positions []
+  Net ZN: Via positions []
+Column Track Costs: [2, 2, 3, 2, 2]
+
+===== Metrics Summary =====
+Pre-allocated num_cols (2*max(|PMOS|,|NMOS|)+1): 5
+Real used CPP: 3
+  PMOS rightmost gate pos: 2
+  NMOS rightmost gate pos: 2
+
+--- Routing Metrics ---
+Total M0 wire segments: 9
+Total M2 wire segments: 0
+Total V0 vias: 0
+Total EOL (M0): 2
+Total EOL (M2): 0
+
+--- Cost Breakdown ---
+M0 track cost (×3):   27.0
+M2 track cost (×12):  0.0
+Via cost:             0.0
+EOL M0 cost (×1):    2.0
+EOL M2 cost (×6):    0.0
+OBS penalty (×100):  0.0
+Pin separation:      -1.0
+Total objective:      24.0
+Runtime :  0.072

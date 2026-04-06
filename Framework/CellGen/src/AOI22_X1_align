@@ -1,0 +1,121 @@
+Optimal solution found.
+PMOS: 1  ['net2', 'A2', 'ZN', 'A1', 'net2', 'B1', 'VDD', 'B2', 'net2']
+NMOS: 1  ['VSS', 'A2', 'net0', 'A1', 'ZN', 'B1', 'net1', 'B2', 'VSS']
+
+t_n_c_r and ut_n_c_r values:
+  Net B1: Via positions [], []
+  Net B1, H 1, Row 3: [0, 0, 0, 0, 1, 1, 0, 0, 0]
+  Net B1, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B1, H 1, Row 1: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B1, H 1, Row 0: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B1, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B1, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B1, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B1, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2: Via positions [], []
+  Net net2, H 1, Row 3: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2, H 1, Row 2: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+  Net net2, H 1, Row 1: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2, H 1, Row 0: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net2, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1: Via positions [], []
+  Net A1, H 1, Row 3: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1, H 1, Row 1: [0, 0, 0, 1, 1, 0, 0, 0, 0]
+  Net A1, H 1, Row 0: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A1, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1: Via positions [], []
+  Net net1, H 1, Row 3: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 1: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 0: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net1, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0: Via positions [], []
+  Net net0, H 1, Row 3: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 1: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 0: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net net0, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net ZN: Via positions [(1, 8)], []
+  Net ZN, H 1, Row 3: [0, 1, 1, 0, 0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 1: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 0: [0, 1, 1, 1, 1, 0, 0, 0, 0]
+  Net ZN, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net ZN, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2: Via positions [], []
+  Net A2, H 1, Row 3: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 1: [1, 1, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 0: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net A2, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2: Via positions [], []
+  Net B2, H 1, Row 3: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2, H 1, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2, H 1, Row 1: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2, H 1, Row 0: [0, 0, 0, 0, 0, 0, 1, 1, 0]
+  Net B2, H 1, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2, H 1, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2, H 1, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net B2, H 1, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net eol, Row 3: [1, 0, 0, 1, 0, 0, 1, 0, 0]
+  Net eol, Row 2: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net eol, Row 1: [0, 0, 1, 0, 0, 1, 0, 0, 0]
+  Net eol, Row 0: [1, 0, 0, 0, 0, 1, 0, 0, 1]
+  Net eol, Row 7: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net eol, Row 6: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net eol, Row 5: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  Net eol, Row 4: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Optimal total cost: 132.0
+Optimal Via positions:
+  Net B1: Via positions []
+  Net net2: Via positions []
+  Net A1: Via positions []
+  Net net1: Via positions []
+  Net net0: Via positions []
+  Net ZN: Via positions [(1, 8)]
+  Net A2: Via positions []
+  Net B2: Via positions []
+Column Track Costs: [4, 4, 4, 4, 4, 4, 3, 2, 2]
+
+===== Metrics Summary =====
+Pre-allocated num_cols (2*max(|PMOS|,|NMOS|)+1): 9
+Real used CPP: 5
+  PMOS rightmost gate pos: 4
+  NMOS rightmost gate pos: 4
+
+--- Routing Metrics ---
+Total M0 wire segments: 23
+Total M2 wire segments: 0
+Total V0 vias: 1
+Total EOL (M0): 8
+Total EOL (M2): 0
+
+--- Cost Breakdown ---
+M0 track cost (×3):   69.0
+M2 track cost (×12):  0.0
+Via cost:             60.0
+EOL M0 cost (×1):    8.0
+EOL M2 cost (×6):    0.0
+OBS penalty (×100):  0.0
+Pin separation:      -1.0
+Total objective:      132.0
+Runtime :  1.472

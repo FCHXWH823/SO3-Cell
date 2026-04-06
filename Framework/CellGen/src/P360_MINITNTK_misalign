@@ -1,0 +1,10 @@
+Best feasible solution (status=11, gap=41.18%).
+PMOS: 1  ['p2', 'G', 'p4', 'E', 'p1', 'A', 'ZN', 'dummy', 'p4', 'F', 'VDD', 'H', 'p4', 'B', 'p3', 'dummy', 'p1', 'C', 'p3', 'dummy', 'p2', 'E', 'VDD', 'dummy', 'p2', 'A', 'p3', 'D', 'ZN', 'dummy', 'p2', 'dummy', 'E', 'dummy', 'p3', 'dummy', 'p1', 'dummy', 'H', 'dummy', 'ZN', 'dummy', 'C']
+NMOS: 1  ['ZN', 'G', 'n4', 'E', 'n2', 'A', 'n1', 'dummy', 'n2', 'F', 'ZN', 'D', 'n2', 'B', 'VSS', 'dummy', 'ZN', 'C', 'n1', 'dummy', 'n4', 'H', 'n3', 'dummy', 'VSS', 'F', 'n3', 'D', 'n1', 'dummy', 'VSS', 'dummy', 'E', 'dummy', 'n3', 'dummy', 'G', 'dummy', 'A', 'dummy', 'G', 'dummy', 'D']
+
+===== Metrics Summary =====
+Pre-allocated num_cols (2*max(|PMOS|,|NMOS|)+1): 43
+Real used CPP: 15
+  PMOS rightmost gate pos: 14
+  NMOS rightmost gate pos: 14
+Runtime :  21.2

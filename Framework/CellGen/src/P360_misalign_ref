@@ -1,0 +1,29 @@
+Optimal solution found.
+Optimal CPP: 11  (misaligned columns: 2)
+  PMOS MM10: gate_col=1, gate_pos=1, orient=0, G=A, D=ZN, S=p1, Mode1
+  PMOS MM11: gate_col=17, gate_pos=9, orient=1, G=B, D=p4, S=p3, Mode1
+  PMOS MM12: gate_col=5, gate_pos=3, orient=1, G=C, D=p3, S=p1, Mode1
+  PMOS MM13: gate_col=3, gate_pos=2, orient=0, G=D, D=p3, S=ZN, Mode1
+  PMOS MM14: gate_col=11, gate_pos=6, orient=1, G=E, D=VDD, S=p2, Mode1
+  PMOS MM15: gate_col=15, gate_pos=8, orient=0, G=F, D=p4, S=VDD, Mode1
+  PMOS MM16: gate_col=21, gate_pos=11, orient=1, G=G, D=p2, S=p4, Mode1
+  PMOS MM17: gate_col=9, gate_pos=5, orient=0, G=H, D=VDD, S=p4, Mode1
+  PMOS MM18: gate_col=19, gate_pos=10, orient=1, G=A, D=p3, S=p2, Mode4(poly-cut)
+  PMOS MM19: gate_col=7, gate_pos=4, orient=0, G=E, D=p4, S=p1, Mode4(poly-cut)
+  NMOS MM0: gate_col=1, gate_pos=1, orient=0, G=A, D=n2, S=n1, Mode1
+  NMOS MM1: gate_col=17, gate_pos=9, orient=0, G=B, D=n2, S=VSS, Mode1
+  NMOS MM2: gate_col=5, gate_pos=3, orient=1, G=C, D=ZN, S=n1, Mode1
+  NMOS MM3: gate_col=3, gate_pos=2, orient=0, G=D, D=ZN, S=n2, Mode1
+  NMOS MM4: gate_col=11, gate_pos=6, orient=0, G=E, D=n2, S=n4, Mode1
+  NMOS MM5: gate_col=19, gate_pos=10, orient=0, G=F, D=ZN, S=n2, Mode4(poly-cut)
+  NMOS MM6: gate_col=21, gate_pos=11, orient=1, G=G, D=ZN, S=n4, Mode1
+  NMOS MM7: gate_col=9, gate_pos=5, orient=0, G=H, D=n4, S=n3, Mode1
+  NMOS MM8: gate_col=7, gate_pos=4, orient=1, G=D, D=n1, S=n3, Mode4(poly-cut)
+  NMOS MM9: gate_col=15, gate_pos=8, orient=1, G=F, D=n3, S=VSS, Mode1
+PMOS: 1 ['p1', 'A', 'ZN', 'D', 'p3', 'C', 'p1', 'E', 'p4', 'H', 'VDD', 'E', 'p2', 'dummy', 'VDD', 'F', 'p4', 'B', 'p3', 'A', 'p2']
+NMOS: 1 ['n1', 'A', 'n2', 'D', 'ZN', 'C', 'n1', 'D', 'n3', 'H', 'n4', 'E', 'n2', 'dummy', 'n3', 'F', 'VSS', 'B', 'n2', 'F', 'ZN']
+  Mode 1 columns: 8
+  Mode 3 columns: 0
+  Mode 4 (poly-cut) columns: 2
+  Mode 2 (guard/spacer) columns: 1
+Runtime: 9.97s

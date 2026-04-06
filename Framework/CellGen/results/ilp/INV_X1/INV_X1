@@ -1,0 +1,61 @@
+Optimal solution found.
+PMOS: 1  ['VDD', 'I', 'ZN']
+NMOS: 1  ['VSS', 'I', 'ZN']
+
+t_n_c_r and ut_n_c_r values:
+  Net ZN: Via positions [], []
+  Net ZN, H 1, Row 3: [0, 0, 0]
+  Net ZN, H 1, Row 2: [0, 0, 0]
+  Net ZN, H 1, Row 1: [0, 0, 0]
+  Net ZN, H 1, Row 0: [1, 1, 1]
+  Net ZN, H 1, Row 7: [0, 0, 0]
+  Net ZN, H 1, Row 6: [0, 0, 0]
+  Net ZN, H 1, Row 5: [0, 0, 0]
+  Net ZN, H 1, Row 4: [0, 0, 0]
+  Net I: Via positions [], []
+  Net I, H 1, Row 3: [1, 1, 1]
+  Net I, H 1, Row 2: [0, 0, 0]
+  Net I, H 1, Row 1: [0, 0, 0]
+  Net I, H 1, Row 0: [0, 0, 0]
+  Net I, H 1, Row 7: [0, 0, 0]
+  Net I, H 1, Row 6: [0, 0, 0]
+  Net I, H 1, Row 5: [0, 0, 0]
+  Net I, H 1, Row 4: [0, 0, 0]
+  Net eol, Row 3: [0, 0, 0]
+  Net eol, Row 2: [0, 0, 0]
+  Net eol, Row 1: [0, 0, 0]
+  Net eol, Row 0: [0, 0, 0]
+  Net eol, Row 7: [0, 0, 0]
+  Net eol, Row 6: [0, 0, 0]
+  Net eol, Row 5: [0, 0, 0]
+  Net eol, Row 4: [0, 0, 0]
+
+Optimal total cost: 15.0
+Optimal Via positions:
+  Net ZN: Via positions []
+  Net I: Via positions []
+Column Track Costs: [2, 2, 2]
+
+===== Metrics Summary =====
+Pre-allocated CPP: 2
+Real used CPP: 2
+  PMOS rightmost gate pos: 1
+  NMOS rightmost gate pos: 1
+
+--- Routing Metrics ---
+Total M0 wire segments: 6
+Total M2 wire segments: 0
+Total V0 vias: 0
+Total EOL (M0): 0
+Total EOL (M2): 0
+
+--- Cost Breakdown ---
+M0 track cost (×3):   18.0
+M2 track cost (×12):  0.0
+Via cost:             0.0
+EOL M0 cost (×1):    0.0
+EOL M2 cost (×6):    0.0
+OBS penalty (×100):  0.0
+Pin separation:      -1.0
+Total objective:      15.0
+Runtime :  0.018

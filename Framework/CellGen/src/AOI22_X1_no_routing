@@ -1,0 +1,13 @@
+Optimal solution found.
+Optimal CPP: 5
+  PMOS MM3: gate_col=5, gate_pos=3, orient=0, G=B2, D=net2, S=VDD
+  PMOS MM2: gate_col=3, gate_pos=2, orient=0, G=B1, D=VDD, S=net2
+  PMOS MM1: gate_col=1, gate_pos=1, orient=1, G=A1, D=ZN, S=net2
+  PMOS MM0: gate_col=7, gate_pos=4, orient=1, G=A2, D=net2, S=ZN
+  NMOS MM7: gate_col=5, gate_pos=3, orient=1, G=B2, D=net1, S=VSS
+  NMOS MM6: gate_col=3, gate_pos=2, orient=1, G=B1, D=ZN, S=net1
+  NMOS MM5: gate_col=1, gate_pos=1, orient=1, G=A1, D=net0, S=ZN
+  NMOS MM4: gate_col=7, gate_pos=4, orient=1, G=A2, D=VSS, S=net0
+PMOS: 1 ['ZN', 'A1', 'net2', 'B1', 'VDD', 'B2', 'net2', 'A2', 'ZN']
+NMOS: 1 ['net0', 'A1', 'ZN', 'B1', 'net1', 'B2', 'VSS', 'A2', 'net0']
+Runtime: 0.014s

@@ -1,0 +1,13 @@
+/home/wx2356/miniconda3/envs/so3/lib/python3.10/site-packages/gurobipy/__init__.py
+13.0.1
+Set parameter Username
+Set parameter LicenseID to value 2797916
+Academic license - for non-commercial use only - expires 2027-03-25
+Set parameter OutputFlag to value 1
+Set parameter LogFile to value "gurobi.log"
+Set parameter LogToConsole to value 1
+Set parameter DisplayInterval to value 1
+usage: ILP_SH_notopo_no_routing.py [-h] --cdl CDL [--cell CELL]
+                                   [--subckt SUBCKT]
+                                   [--out-cell-name OUT_CELL_NAME]
+ILP_SH_notopo_no_routing.py: error: unrecognized arguments: 2

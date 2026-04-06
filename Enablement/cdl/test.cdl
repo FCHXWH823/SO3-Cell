@@ -1,0 +1,22 @@
+.SUBCKT P360_MINITNTK A B C D E F G H VDD VSS ZN
+MM0 n2 A n1 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM1 n2 B VSS VSS nmos_rvt w=46.0n l=16n nfin=2
+MM2 ZN C n1 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM3 ZN D n2 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM4 n2 E n4 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM5 ZN F n2 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM6 ZN G n4 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM7 n4 H n3 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM8 n1 D n3 VSS nmos_rvt w=46.0n l=16n nfin=2
+MM9 n3 F VSS VSS nmos_rvt w=46.0n l=16n nfin=2
+MM10 ZN A p1 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM11 p4 B p3 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM12 p3 C p1 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM13 p3 D ZN VDD pmos_rvt w=46.0n l=16n nfin=2
+MM14 VDD E p2 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM15 p4 F VDD VDD pmos_rvt w=46.0n l=16n nfin=2
+MM16 p2 G p4 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM17 VDD H p4 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM18 p3 A p2 VDD pmos_rvt w=46.0n l=16n nfin=2
+MM19 p4 E p1 VDD pmos_rvt w=46.0n l=16n nfin=2
+.ENDS

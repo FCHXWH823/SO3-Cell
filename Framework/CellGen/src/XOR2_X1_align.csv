@@ -1,0 +1,2 @@
+cell,status,mip_gap_pct,runtime_s,cpp_preallocated,cpp_real,m0_segments,m2_segments,v0_vias,eol_m0,eol_m2,cost_m0,cost_m2,cost_via,cost_eol_m0,cost_eol_m2,cost_obs,cost_pin_sep,total_objective
+XOR2_X1_align,optimal,0.0,1.126,11,6,30,8,4,11,1,90.0,96.0,280.0,11.0,6.0,0.0,1.0,482.0

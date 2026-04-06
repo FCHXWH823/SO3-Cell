@@ -1,0 +1,10 @@
+Optimal solution found.
+PMOS: 1  ['net2', 'B1', 'VDD', 'B2', 'net2', 'A2', 'ZN', 'A1', 'net2', 'dummy', 'VDD', 'dummy', 'B1', 'dummy', 'VDD', 'dummy', 'VDD', 'dummy', 'B1']
+NMOS: 1  ['ZN', 'B1', 'net1', 'B2', 'VSS', 'A2', 'net0', 'A1', 'ZN', 'dummy', 'VSS', 'dummy', 'VSS', 'dummy', 'net1', 'dummy', 'VSS', 'dummy', 'B2']
+
+===== Metrics Summary =====
+Pre-allocated num_cols (2*max(|PMOS|,|NMOS|)+1): 19
+Real used CPP: 5
+  PMOS rightmost gate pos: 4
+  NMOS rightmost gate pos: 4
+Runtime :  0.24

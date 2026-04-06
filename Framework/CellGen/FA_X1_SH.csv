@@ -1,0 +1,2 @@
+cell,status,mip_gap_pct,runtime_s,cpp_preallocated,cpp_real,m0_segments,m2_segments,v0_vias,eol_m0,eol_m2,cost_m0,cost_m2,cost_via,cost_eol_m0,cost_eol_m2,cost_obs,cost_pin_sep,total_objective
+FA_X1_SH,time_limit_feasible,78.67,300.028,25,13,74,31,5,19,4,222.0,372.0,300.0,19.0,24.0,0.0,3.0,933.0

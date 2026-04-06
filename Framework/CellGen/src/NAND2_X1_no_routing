@@ -1,0 +1,9 @@
+Optimal solution found.
+Optimal CPP: 3
+  PMOS MM1: gate_col=1, gate_pos=1, orient=0, G=A2, D=ZN, S=VDD
+  PMOS MM0: gate_col=3, gate_pos=2, orient=1, G=A1, D=ZN, S=VDD
+  NMOS MM3: gate_col=1, gate_pos=1, orient=0, G=A2, D=net16, S=VSS
+  NMOS MM2: gate_col=3, gate_pos=2, orient=0, G=A1, D=ZN, S=net16
+PMOS: 1 ['VDD', 'A2', 'ZN', 'A1', 'VDD']
+NMOS: 1 ['VSS', 'A2', 'net16', 'A1', 'ZN']
+Runtime: 0.008s
